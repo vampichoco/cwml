@@ -1,0 +1,104 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CassandraParser
+</name>
+</assembly>
+<members>
+<member name="P:CassandraParser.CWML.StandardParsers.BlockParsers">
+	<summary>
+ Get a list of all the functions used to parse CWML blocks
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:CassandraParser.CWML.StandardParsers.CassandraParser">
+	<summary>
+ Gets a class used to parse CWML blocks
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CassandraParser.CWML.StandardParsers.#ctor(CassandraParser.CWML.CassandraParser)">
+	<summary>
+ Iniatilize this Standard Parsers Class
+ </summary>
+	<param name="CassandraParser">The cassandra parser that will make the parsing function</param>
+	<remarks></remarks>
+</member><member name="M:CassandraParser.CWML.StandardParsers.ParsePage(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+	<summary>
+ Parse a page block element 
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CassandraParser.CWML.StandardParsers.ParseHead(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+	<summary>
+ Parse a head block element 
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CassandraParser.CWML.StandardParsers.ParseBody(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+	<summary>
+ Parse a body block element
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CassandraParser.CWML.StandardParsers.ParseImage(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+	<summary>
+ Parse an image block element
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CassandraParser.CWML.StandardParsers.ParseLink(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+	<summary>
+ Parse a link block element
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:CassandraParser.CWML.StandardParsers">
+	<summary>
+ Provides basic parsing functions from CWML to HTML
+ </summary>
+	<remarks></remarks>
+</member><member name="P:CassandraParser.CWML.CassandraParser.BlockParsers">
+	<summary>
+ Gets a list of the parsers that will be used on the current parse proccess
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CassandraParser.CWML.CassandraParser.Parse(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+	<summary>
+ Parse one CWML block into an HTML block
+ </summary>
+	<param name="data">Xml Element containing CWML data</param>
+	<param name="req">Request information</param>
+	<returns>One Xml Element containing parsed data into HTML</returns>
+	<remarks></remarks>
+</member><member name="P:CassandraParser.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:CassandraParser.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:CassandraParser.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>

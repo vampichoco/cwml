@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <header>
+    <link goesto="elle.cwml">
+      <plain>View an image</plain>
+    </link>
+    <link goesto="bio.cwml">
+      <plain>biography</plain>
+    </link>
+  </header>
+  <h1>Welcome to my site of Elle Fanning</h1>
+  <plain>This web site is developed using CWML.</plain>
+  <plain>CWML is Cassandra/Custom Web Markup Language wich is used to simplify creation of web pages, in this page, a simple XML file is compiled into HTML</plain>
+  <plain>As CWML is extensible, i can add one tag called Elle and then the compiler will create the required HTML to show the biography of Elle</plain>
+
+  <elle />
+  
+  
+  
+</page>
