@@ -17,20 +17,6 @@ cassandraParser_t2
   web and register it with IIS before being able to use it. For more information
   see the following link: http://go.microsoft.com/?linkid=8101007
  </summary>
-</member><member name="F:cassandraParser_t2.Default_aspx.form1">
-	<summary>
-form1 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="P:cassandraParser_t2.IISHandler1.IsReusable">
-	<summary>
-  You will need to configure this handler in the Web.config file of your 
-  web and register it with IIS before being able to use it. For more information
-  see the following link: http://go.microsoft.com/?linkid=8101007
- </summary>
 </member><member name="P:cassandraParser_t2.My.MyWebExtension.Computer">
 	<summary>
  Returns information about the host computer.

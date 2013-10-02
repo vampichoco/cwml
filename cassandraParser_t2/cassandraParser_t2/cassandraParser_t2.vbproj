@@ -40,6 +40,18 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IronPython">
+      <HintPath>..\..\..\..\..\Downloads\IronPython-2.7.4\IronPython-2.7.4\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic">
+      <HintPath>..\..\..\..\..\Downloads\IronPython-2.7.4\IronPython-2.7.4\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting">
+      <HintPath>..\..\..\..\..\Downloads\IronPython-2.7.4\IronPython-2.7.4\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.AspNet">
+      <HintPath>..\..\..\..\..\Downloads\IronPython-2.7.4\IronPython-2.7.4\Microsoft.Scripting.AspNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -81,11 +93,17 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default.aspx.aspx" />
-    <Content Include="index.cwml" />
-    <Content Include="bio.cwml" />
-    <Content Include="Web.config" />
-    <Content Include="WebService1.asmx" />
+    <Content Include="cam.xml" />
+    <Content Include="camTest.html" />
+    <Content Include="index.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="bio.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="elle1.cwml">
       <SubType>Designer</SubType>
     </None>
@@ -96,13 +114,6 @@
   <ItemGroup>
     <Compile Include="CassandraHandler.vb" />
     <Compile Include="CustomParsers.vb" />
-    <Compile Include="Default.aspx.aspx.designer.vb">
-      <DependentUpon>Default.aspx.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Default.aspx.aspx.vb">
-      <DependentUpon>Default.aspx.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -121,10 +132,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="WebService1.asmx.vb">
-      <DependentUpon>WebService1.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿Namespace CWML
+﻿
+
+Namespace CWML
 
     ''' <summary>
     ''' Provides basic parsing functions from CWML to HTML
@@ -53,6 +55,9 @@
                 .Add("link", AddressOf ParseLink)
                 .Add("image", AddressOf ParseImage)
                 .Add("h1", AddressOf ParseH1)
+                .Add("br", AddressOf ParseBr)
+                .Add("p", AddressOf ParseP)
+                .Add("text", AddressOf ParseText)
             End With
 
         End Sub
@@ -126,8 +131,14 @@
         ''' <remarks></remarks>
         Public Function ParseLink(ByVal data As XElement, req As Web.HttpRequest) As XElement
             Dim content = <a href=<%= data.Attribute("goesto").Value %>>
-                              <%= CassandraParser.Parse(data.Elements.First(), req) %>
                           </a>
+
+            If Not data.HasElements Then
+                content.Value = data.Value
+            Else
+                'Dim parsed = CassandraParser.Parse(data.Elements.First, req)
+                content.Add(CassandraParser.Parse(data.Elements.First, req))
+            End If
 
             Return content
         End Function
@@ -135,6 +146,31 @@
         Public Function ParseH1(ByVal data As XElement, req As Web.HttpRequest) As XElement
             Dim content = <h1><%= data.Value %></h1>
             Return content
+        End Function
+
+        Public Function ParseBr(ByVal data As XElement, req As Web.HttpRequest) As XElement
+            Return <br/>
+        End Function
+
+        Public Function ParseP(ByVal data As XElement, req As Web.HttpRequest) As XElement
+            Dim content = <p <%= From item In data.Attributes Select item %>>
+                              <%= From item In data.Elements Select CassandraParser.Parse(item, req) %>
+                          </p>
+
+            Return content
+
+        End Function
+
+        Public Function ParseText(ByVal data As XElement, req As Web.HttpRequest) As XElement
+            Dim lines = data.Value.Split(vbLf)
+            Return <p>
+                       <%= From item In lines Select
+                           <div><%= item %></div> %>
+                   </p>
+        End Function
+
+        Public Function parseScript(ByVal data As XElement, req As Web.HttpRequest) As XElement
+
         End Function
 
 #End Region

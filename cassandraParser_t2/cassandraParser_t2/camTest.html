@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+<video autoplay></video>
+
+<script>
+    var onFailSoHard = function (e) {
+        console.log('Reeeejected!', e);
+    };
+
+    // Not showing vendor prefixes.
+    window.URL = window.URL || window.webkitURL;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                              navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+    var video = document.querySelector('video');
+
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({ audio: true, video: true }, function (stream) {
+            video.src = window.URL.createObjectURL(stream);
+        }, onFailSoHard);
+    } else {
+        video.src = 'somevideo.webm'; // fallback.
+    }
+</script>
+</body>
+</html>

@@ -2,8 +2,10 @@
 <page>
   <header>
     <link goesto="index.cwml">
-      <plain>Home</plain>
+      Home
     </link>
   </header>
-  <elle />
+  <p>
+    <elle />
+  </p>
 </page>

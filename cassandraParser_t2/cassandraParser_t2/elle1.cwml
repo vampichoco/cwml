@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <page>
   <header>
-    <link goesto="elle.cwml">
-      <plain>Home</plain>
+    <link goesto="elle.cwml">Home
     </link>
   </header>
   <link goesto="http://www.devartlabs.com">

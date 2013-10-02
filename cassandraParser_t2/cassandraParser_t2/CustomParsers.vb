@@ -1,5 +1,8 @@
 ﻿
 Imports CassandraParser
+Imports IronPython.Hosting
+Imports Microsoft.Scripting
+Imports Microsoft.Scripting.Hosting
 
 
 ''' <summary>
@@ -11,6 +14,10 @@ Public Class CustomParsers
 
     Private _blockParsers As Dictionary(Of String, Func(Of XElement, Web.HttpRequest, XElement))
     Private _cassandra As CassandraParser.CWML.CassandraParser
+
+    'User for bit.ly shorten links 
+    Private bitlyLogin = ""
+    Private BitlyApiKey = ""
 
     Public ReadOnly Property BlockParsers As Dictionary(Of String, Func(Of XElement, HttpRequest, XElement)) Implements CassandraParser.CWML.iBlockParserList.BlockParsers
         Get
@@ -32,6 +39,9 @@ Public Class CustomParsers
             .Add("header", AddressOf ParseHeader)
             .Add("plain", AddressOf ParsePlain)
             .Add("elle", AddressOf ParseElle)
+            .Add("bitly", AddressOf parseBitly)
+            .Add("camera", AddressOf parseCamera)
+            .Add("script", AddressOf ParseScript)
         End With
 
     End Sub
@@ -73,6 +83,55 @@ Public Class CustomParsers
                       </div>
 
         Return Content
+    End Function
+
+    Public Function parseBitly(ByVal data As XElement, req As Web.HttpRequest) As XElement
+        Dim longUrl = HttpUtility.UrlEncode(data.Value)
+        Dim apiUrl As String =
+            String.Format("https://api-ssl.bitly.com/v3/shorten?login={0}&apiKey={1}&longUrl={2}&format=txt", bitlyLogin, BitlyApiKey, longUrl)
+
+        Dim webClient As New Net.WebClient
+        Dim shortUrlStr = webClient.DownloadString(apiUrl)
+
+        Dim shortUrlData = New XCData(shortUrlStr)
+
+        Dim content = <a href=<%= shortUrlStr %>><%= shortUrlStr %></a>
+
+        Return content
+    End Function
+
+    Public Function parseCamera(ByVal data As XElement, req As Web.HttpRequest) As XElement
+
+        Dim xDoc As XDocument = XDocument.Load(req.MapPath("cam.xml"))
+
+        Dim container = <div>
+                            <%= From item In xDoc.<cam>.Elements Select item %>
+                        </div>
+
+        Return container
+
+    End Function
+
+    Public Function ParseScript(ByVal data As XElement, req As Web.HttpRequest) As XElement
+        Dim script = data.Value
+
+        Dim engine = Python.CreateEngine
+        Dim scope = engine.CreateScope
+        Dim source = engine.CreateScriptSourceFromString(script, SourceCodeKind.Statements)
+        Dim compiled = source.Compile
+
+        Dim result = compiled.Execute(scope)
+
+        scope.SetVariable("__request", req)
+
+        Dim var = scope.GetVariable("hello")
+
+        'Dim varData = <div><%= var %></div>
+
+        Dim XResult = scope.GetVariable("__result")
+
+        Return XResult
+
     End Function
 #End Region
 

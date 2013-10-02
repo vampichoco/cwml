@@ -27,7 +27,12 @@
         ''' <remarks></remarks>
         Public Function Parse(ByVal data As XElement, req As System.Web.HttpRequest) As XElement
             Dim act = BlockParsers(data.Name.ToString)
+            ''If data.NodeType = Xml.XmlNodeType.Text Then
+            ''    Return data
+            ''Else
             Return act.Invoke(data, req)
+            'End If
+
         End Function
 
     End Class
