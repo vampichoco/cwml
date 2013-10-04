@@ -20,3 +20,25 @@ C:\Users\Eski\documents\visual studio 2012\Projects\cassandraParser_t2\cassandra
 C:\Users\Eski\documents\visual studio 2012\Projects\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.xml
 C:\Users\Eski\documents\visual studio 2012\Projects\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.AspNet.xml
 C:\Users\Eski\documents\visual studio 2012\Projects\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.Metadata.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\cassandraParser_t2.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\cassandraParser_t2.pdb
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\cassandraParser_t2.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\CassandraParser.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Dynamic.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.AspNet.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.Metadata.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\CassandraParser.pdb
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\CassandraParser.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Dynamic.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.AspNet.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.Metadata.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.vbprojResolveAssemblyReference.cache
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.Resources.resources
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.vbproj.GenerateResource.Cache
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.xml
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.pdb

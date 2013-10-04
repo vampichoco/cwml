@@ -101,6 +101,7 @@
     <Content Include="bio.cwml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <page>
-  <header>
-    <link goesto="elle.cwml">Home
+  <head>
+    <css>style.css</css>
+  </head>
+  <body>
+    <header>
+      <link goesto="elle.cwml">
+        Home
+      </link>
+    </header>
+    <link goesto="http://www.devartlabs.com">
+      <image>http://eskipublic.s3.amazonaws.com/9894ab801e0a010d8f6aa6b635afef59.jpg</image>
     </link>
-  </header>
-  <link goesto="http://www.devartlabs.com">
-    <image>http://eskipublic.s3.amazonaws.com/9894ab801e0a010d8f6aa6b635afef59.jpg</image>
-  </link>
+  </body>
 </page>

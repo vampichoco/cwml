@@ -58,9 +58,11 @@ Namespace CWML
                 .Add("br", AddressOf ParseBr)
                 .Add("p", AddressOf ParseP)
                 .Add("text", AddressOf ParseText)
+                .Add("css", AddressOf ParseCss)
             End With
 
         End Sub
+
 
 #Region "Parsers Region"
 
@@ -169,8 +171,9 @@ Namespace CWML
                    </p>
         End Function
 
-        Public Function parseScript(ByVal data As XElement, req As Web.HttpRequest) As XElement
-
+        Public Function ParseCss(ByVal data As XElement, req As Web.HttpRequest) As XElement
+            Dim content = <link rel="stylesheet" type="text/css" href=<%= data.Value %>/>
+            Return content
         End Function
 
 #End Region
