@@ -48,12 +48,12 @@ Public Class CustomParsers
 
 #Region "Parsers"
     Public Function ParseHeader(ByVal data As XElement, ByVal req As Web.HttpRequest) As XElement
-        Dim content = <div Style="background-color:CCFFFF; color:CC0033">
+        Dim content = <div>
                           <h1>My site of Elle fanning</h1>
                           <%= From item In data.Elements Select _cassandra.Parse(item, req) %>
                       </div>
 
-        Return content
+        Return CassandraParser.SetDefaultCss(data, content)
     End Function
 
     Public Function ParsePlain(ByVal data As XElement, ByVal req As Web.HttpRequest) As XElement
@@ -75,14 +75,14 @@ Public Class CustomParsers
         End If
 
 
-        Dim Content = <div style="padding:5px; background-color:CCFFCC">
+        Dim Content = <div>
                           <div>Mary Elle Fanning</div>
                           <div>Born in Conyers Georgie</div>
                           <%= hbd %>
 
                       </div>
 
-        Return Content
+        Return CassandraParser.SetDefaultCss(data, Content)
     End Function
 
     Public Function parseBitly(ByVal data As XElement, req As Web.HttpRequest) As XElement

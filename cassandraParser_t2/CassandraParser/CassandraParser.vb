@@ -2,6 +2,8 @@
     Public Class CassandraParser
         Private _blockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, XElement))
 
+        Private _useDefaultCss As Boolean
+
         Public Sub New()
             _blockParsers = New Dictionary(Of String, Func(Of XElement, Web.HttpRequest, XElement))
         End Sub
@@ -16,6 +18,15 @@
             Get
                 Return _blockParsers
             End Get
+        End Property
+
+        Public Property UseDefaultCss As Boolean
+            Get
+                Return _useDefaultCss
+            End Get
+            Set(value As Boolean)
+                _useDefaultCss = value
+            End Set
         End Property
 
         ''' <summary>
@@ -33,6 +44,16 @@
             Return act.Invoke(data, req)
             'End If
 
+        End Function
+
+        Public Function SetDefaultCss(ByVal original As XElement, target As XElement) As XElement
+            If UseDefaultCss Then
+                Dim ElName = String.Format("cwml-default-{0}", original.Name)
+                target.SetAttributeValue("class", ElName)
+                Return target
+            Else
+                Return target
+            End If
         End Function
 
     End Class

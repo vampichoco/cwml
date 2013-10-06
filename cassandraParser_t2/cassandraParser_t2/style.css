@@ -1,3 +1,33 @@
-﻿body {
-    background-color: #0094ff
+﻿@import url(http://fonts.googleapis.com/css?family=Pontano+Sans);
+
+body {
+    background-color: white;
 }
+
+.cwml-default-p, .cwml-default-div, .cwml-default-text {
+    color: #6600FF;
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: medium;
+}
+
+h1 {
+    font-size: xx-large;
+    color: #CC0033; 
+    font-family: 'Pontano Sans', sans-serif;
+}
+
+.cwml-default-elle {
+    background-color: #FFFF99;
+    color:#000066; 
+    font-family: 'Pontano Sans', sans-serif;
+    padding:5px; 
+    border-radius:5px;
+}
+
+.cwml-default-header {
+    background-color: #FFCCCC;
+    color:#000066; 
+    font-family: 'Pontano Sans', sans-serif;
+}
+
+

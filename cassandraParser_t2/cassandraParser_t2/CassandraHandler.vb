@@ -34,7 +34,10 @@ Public Class CassandraHandler
             parser.BlockParsers.Add(blockParser.Key, blockParser.Value)
         Next
 
-        
+
+        parser.UseDefaultCss = True
+
+
 
         'This is a sample of how to add custom parsers 
 

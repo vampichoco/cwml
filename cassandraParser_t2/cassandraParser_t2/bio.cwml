@@ -1,11 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <page>
-  <header>
-    <link goesto="index.cwml">
-      Home
-    </link>
-  </header>
-  <p>
-    <elle />
-  </p>
+  <head>
+    <css>style.css</css>
+  </head>
+  <content>
+    <header>
+      <link goesto="index.cwml">
+        Home
+      </link>
+    </header>
+    <p>
+      <elle />
+    </p>
+  </content>
 </page>

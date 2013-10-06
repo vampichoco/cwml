@@ -12,6 +12,7 @@ Namespace CWML
         Private _blockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, XElement))
         Private _cassandra As CassandraParser
 
+
         ''' <summary>
         ''' Get a list of all the functions used to parse CWML blocks
         ''' </summary>
@@ -36,6 +37,7 @@ Namespace CWML
             End Get
         End Property
 
+
         ''' <summary>
         ''' Iniatilize this Standard Parsers Class
         ''' </summary>
@@ -51,7 +53,7 @@ Namespace CWML
             With _blockParsers
                 .Add("page", AddressOf ParsePage)
                 .Add("head", AddressOf ParseHead)
-                .Add("body", AddressOf ParseBody)
+                .Add("content", AddressOf ParseBody)
                 .Add("link", AddressOf ParseLink)
                 .Add("image", AddressOf ParseImage)
                 .Add("h1", AddressOf ParseH1)
@@ -156,25 +158,38 @@ Namespace CWML
 
         Public Function ParseP(ByVal data As XElement, req As Web.HttpRequest) As XElement
             Dim content = <p <%= From item In data.Attributes Select item %>>
-                              <%= From item In data.Elements Select CassandraParser.Parse(item, req) %>
+
                           </p>
 
-            Return content
+            If Not data.HasElements Then
+                content.Value = data.Value
+            Else
+                For Each item In data.Elements
+                    content.Add(CassandraParser.Parse(item, req))
+                Next
+            End If
+
+
+            Return (CassandraParser.SetDefaultCss(data, content))
 
         End Function
 
         Public Function ParseText(ByVal data As XElement, req As Web.HttpRequest) As XElement
             Dim lines = data.Value.Split(vbLf)
-            Return <p>
-                       <%= From item In lines Select
-                           <div><%= item %></div> %>
-                   </p>
+            Dim result = <p <%= From item In data.Attributes Select item %>>
+                             <div>
+                                 <%= From item In lines Select CassandraParser.SetDefaultCss(data, (New XElement("div", item))) %>
+                             </div>
+                         </p>
+
+            Return result
         End Function
 
         Public Function ParseCss(ByVal data As XElement, req As Web.HttpRequest) As XElement
             Dim content = <link rel="stylesheet" type="text/css" href=<%= data.Value %>/>
             Return content
         End Function
+
 
 #End Region
 

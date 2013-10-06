@@ -1,45 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <page>
-  <header>
-    <link goesto="elle.cwml">View an image</link>
-    <link goesto="bio.cwml"> | biography</link>
-  </header>
 
-  <h1>Welcome to my site of Elle Fanning</h1>
+  <head>
+    <!-- <title>Hello to my Elle Fanning Site</title> -->
+    <css>style.css</css>
+  </head>
 
-  <text>
-    This web site is developed using CWML.
-    CWML is Cassandra/Custom Web Markup Language wich is used to simplify creation of web pages, in this page, a simple XML file is compiled into HTML
-    As CWML is extensible, i can add one tag called Elle and then the compiler will create the required HTML to show the biography of Elle
-  </text>
+  <content>
+    <header>
+      <link goesto="elle.cwml">View an image</link>
+      <link goesto="bio.cwml"> | biography</link>
+    </header>
 
-  <elle />
+    <h1>Welcome to my site of Elle Fanning</h1>
 
-  <link goesto="https://github.com/vampichoco/cwml/blob/master/cassandraParser_t2/cassandraParser_t2/index.cwml">
-    Check the file that generates this page
-  </link>
+    <text>
+      This web site is developed using CWML.
+      CWML is Cassandra/Custom Web Markup Language wich is used to simplify creation of web pages, in this page, a simple XML file is compiled into HTML
+      As CWML is extensible, i can add one tag called Elle and then the compiler will create the required HTML to show the biography of Elle
+    </text>
 
-  <link goesto="https://github.com/vampichoco/cwml">
-    hello
-  </link>
+    <elle />
 
-  <br />
+    <link goesto="https://github.com/vampichoco/cwml/blob/master/cassandraParser_t2/cassandraParser_t2/index.cwml">
+      Check the file that generates this page
+    </link>
 
-  <script>
-    <![CDATA[import clr;
-clr.AddReference("System");
-clr.AddReference("System.Xml");
-clr.AddReference("System.Linq");
-clr.AddReference("System.Xml.Linq");
+    <br />
 
-from System import *
-from System.Xml import * 
-from System.Xml.Linq import *
+    <link goesto="https://github.com/vampichoco/cwml">
+      Check the source of this project
+    </link>
 
-__result = XElement("p"); 
-__result.SetValue("hello from cwml");
-  
-hello = "Hello World";]]>
-  </script>
+  </content>
+
 
 </page>
