@@ -26,7 +26,15 @@ h1 {
 
 .cwml-default-header {
     background-color: #FFCCCC;
-    color:#000066; 
+    color: #000066;
+    font-family: 'Pontano Sans', sans-serif;
+}
+
+.cwml-default-dynamic {
+    background-color: #0094ff;
+    color: white; 
+    padding: 5px; 
+    border-radius: 5px;
     font-family: 'Pontano Sans', sans-serif;
 }
 

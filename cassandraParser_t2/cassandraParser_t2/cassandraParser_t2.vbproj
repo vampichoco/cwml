@@ -105,6 +105,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="dynamic.cwml" />
     <None Include="elle1.cwml">
       <SubType>Designer</SubType>
     </None>
@@ -164,6 +165,10 @@
     <ProjectReference Include="..\CassandraParser\CassandraParser.vbproj">
       <Project>{af93bdc2-8690-4d17-a0c2-7cd826408f15}</Project>
       <Name>CassandraParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicBlock\DynamicBlock.vbproj">
+      <Project>{a49ae14d-0cfb-4057-b177-ead5f16a0a2c}</Project>
+      <Name>DynamicBlock</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

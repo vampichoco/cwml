@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <head>
+    <css>style.css</css>
+  </head>
+  <content>
+    <header />
+    <dynamic>
+      <![CDATA[import clr;
+clr.AddReference("System");
+clr.AddReference("System.Xml");
+clr.AddReference("System.Linq");
+clr.AddReference("System.Xml.Linq");
+
+from System import *
+from System.Xml import * 
+from System.Xml.Linq import *
+
+p = XElement("p"); 
+p.SetValue("hello from cwml"); 
+
+__result = __parser.SetDefaultCss(__data, p);
+  
+hello = "Hello World";]]>
+    </dynamic>
+  </content>
+</page>

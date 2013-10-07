@@ -22,15 +22,22 @@
 
     <elle />
 
-    <link goesto="https://github.com/vampichoco/cwml/blob/master/cassandraParser_t2/cassandraParser_t2/index.cwml">
-      Check the file that generates this page
-    </link>
+    <p>
+      <link goesto="dynamic.cwml">In cwml now you can use dynamic blocks</link>
+    </p>
 
-    <br />
+    <p>
+      <link goesto="https://github.com/vampichoco/cwml/blob/master/cassandraParser_t2/cassandraParser_t2/index.cwml">
+        Check the file that generates this page
+      </link>
 
-    <link goesto="https://github.com/vampichoco/cwml">
-      Check the source of this project
-    </link>
+      <br />
+
+      <link goesto="https://github.com/vampichoco/cwml">
+        Check the source of this project
+      </link>
+
+    </p>
 
   </content>
 

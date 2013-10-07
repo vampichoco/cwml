@@ -1,5 +1,5 @@
 ﻿Imports System.Web
-Imports CassandraParser
+Imports CWML
 Public Class CassandraHandler
     Implements IHttpHandler
 
@@ -44,6 +44,14 @@ Public Class CassandraHandler
         Dim custom As New CustomParsers(parser)
 
         For Each bParser In custom.BlockParsers
+            parser.BlockParsers.Add(bParser.Key, bParser.Value)
+        Next
+
+        'Load parser for Dynamic block. 
+
+        Dim DynamicParser As New DynamicBlockParser(parser)
+
+        For Each bParser In DynamicParser.BlockParsers
             parser.BlockParsers.Add(bParser.Key, bParser.Value)
         Next
 

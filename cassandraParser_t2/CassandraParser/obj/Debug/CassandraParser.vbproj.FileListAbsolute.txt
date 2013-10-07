@@ -9,8 +9,8 @@ C:\Users\Eski\documents\visual studio 2012\Projects\cassandraParser_t2\Cassandra
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Debug\CassandraParser.dll
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Debug\CassandraParser.pdb
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Debug\CassandraParser.xml
-C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Debug\CassandraParser.Resources.resources
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Debug\CassandraParser.vbproj.GenerateResource.Cache
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Debug\CassandraParser.dll
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Debug\CassandraParser.xml
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Debug\CassandraParser.pdb
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Debug\CWML.Resources.resources

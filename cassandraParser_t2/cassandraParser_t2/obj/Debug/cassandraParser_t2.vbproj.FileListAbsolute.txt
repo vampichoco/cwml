@@ -42,3 +42,6 @@ C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\De
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.dll
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.xml
 C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.pdb
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\DynamicBlock.dll
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\DynamicBlock.pdb
+C:\Users\Eski\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\DynamicBlock.xml
