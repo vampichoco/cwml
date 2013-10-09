@@ -144,15 +144,36 @@ Public Class StandardParsers
         Return content
     End Function
 
+    ''' <summary>
+    ''' Parse a h1 block element
+    ''' </summary>
+    ''' <param name="data">Xml Element containing data to be parsed</param>
+    ''' <param name="req">Request of the page that must be parsed</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Function ParseH1(ByVal data As XElement, req As Web.HttpRequest) As XElement
         Dim content = <h1><%= data.Value %></h1>
         Return content
     End Function
 
+    ''' <summary>
+    ''' Parse a br block element
+    ''' </summary>
+    ''' <param name="data">Xml Element containing data to be parsed</param>
+    ''' <param name="req">Request of the page that must be parsed</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Function ParseBr(ByVal data As XElement, req As Web.HttpRequest) As XElement
         Return <br/>
     End Function
 
+    ''' <summary>
+    ''' Parse a p block element
+    ''' </summary>
+    ''' <param name="data">Xml Element containing data to be parsed</param>
+    ''' <param name="req">Request of the page that must be parsed</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Function ParseP(ByVal data As XElement, req As Web.HttpRequest) As XElement
         Dim content = <p <%= From item In data.Attributes Select item %>>
 
@@ -171,6 +192,13 @@ Public Class StandardParsers
 
     End Function
 
+    ''' <summary>
+    ''' Takes the inner data and then creates a properly html formed output to keep lines structure.
+    ''' </summary>
+    ''' <param name="data">Xml Element containing data to be parsed</param>
+    ''' <param name="req">Request of the page that must be parsed</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Function ParseText(ByVal data As XElement, req As Web.HttpRequest) As XElement
         Dim lines = data.Value.Split(vbLf)
         Dim result = <p <%= From item In data.Attributes Select item %>>

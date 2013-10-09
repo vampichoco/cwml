@@ -2,6 +2,10 @@
 Imports Microsoft.Scripting
 Imports Microsoft.Scripting.Hosting
 
+''' <summary>
+''' Provides dynamic execution of blocks containing IronPython code
+''' </summary>
+''' <remarks></remarks>
 Public Class DynamicBlockParser
     Implements CWML.iBlockParserList
 
@@ -43,15 +47,11 @@ Public Class DynamicBlockParser
 
         Dim result = compiled.Execute(scope)
 
-
-        Dim var = scope.GetVariable("hello")
-
-        'Dim varData = <div><%= var %></div>
-
         Dim XResult = scope.GetVariable("__result")
 
         Return XResult
     End Function
+
 
    
 End Class

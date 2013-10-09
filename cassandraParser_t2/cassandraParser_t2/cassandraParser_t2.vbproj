@@ -105,7 +105,9 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="dynamic.cwml" />
+    <Content Include="dynamic.cwml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="elle1.cwml">
       <SubType>Designer</SubType>
     </None>
