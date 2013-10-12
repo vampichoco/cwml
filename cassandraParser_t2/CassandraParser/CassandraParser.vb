@@ -1,11 +1,11 @@
 ﻿
 Public Class CassandraParser
-    Private _blockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, XElement))
+    Private _blockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, System.Web.HttpResponse, XElement))
 
     Private _useDefaultCss As Boolean
 
     Public Sub New()
-        _blockParsers = New Dictionary(Of String, Func(Of XElement, Web.HttpRequest, XElement))
+        _blockParsers = New Dictionary(Of String, Func(Of XElement, Web.HttpRequest, Web.HttpResponse, XElement))
     End Sub
 
     ''' <summary>
@@ -14,7 +14,7 @@ Public Class CassandraParser
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public ReadOnly Property BlockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, XElement))
+    Public ReadOnly Property BlockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, System.Web.HttpResponse, XElement))
         Get
             Return _blockParsers
         End Get
@@ -36,12 +36,12 @@ Public Class CassandraParser
     ''' <param name="req">Request information</param>
     ''' <returns>One Xml Element containing parsed data into HTML</returns>
     ''' <remarks></remarks>
-    Public Function Parse(ByVal data As XElement, req As System.Web.HttpRequest) As XElement
+    Public Function Parse(ByVal data As XElement, req As System.Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim act = BlockParsers(data.Name.ToString)
         ''If data.NodeType = Xml.XmlNodeType.Text Then
         ''    Return data
         ''Else
-        Return act.Invoke(data, req)
+        Return act.Invoke(data, req, res)
         'End If
 
     End Function

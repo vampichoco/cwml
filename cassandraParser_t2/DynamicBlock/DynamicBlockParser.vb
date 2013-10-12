@@ -9,14 +9,10 @@ Imports Microsoft.Scripting.Hosting
 Public Class DynamicBlockParser
     Implements CWML.iBlockParserList
 
-    Private _blockParser As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, XElement))
+
     Private _cassandraParser As CWML.CassandraParser
 
-    Public ReadOnly Property BlockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, XElement)) Implements CWML.iBlockParserList.BlockParsers
-        Get
-            Return _blockParser
-        End Get
-    End Property
+    
 
     Public ReadOnly Property CassandraParser As CWML.CassandraParser Implements CWML.iBlockParserList.CassandraParser
         Get
@@ -25,14 +21,15 @@ Public Class DynamicBlockParser
     End Property
 
     Public Sub New(ByVal CassandraParser As CWML.CassandraParser)
-        _blockParser = New Dictionary(Of String, Func(Of XElement, Web.HttpRequest, XElement))
+
         _cassandraParser = CassandraParser
 
         CassandraParser.BlockParsers.Add("dynamic", AddressOf ParseDynamic)
 
+
     End Sub
 
-    Public Function ParseDynamic(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseDynamic(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim script = data.Value
 
         Dim engine = Python.CreateEngine
@@ -42,6 +39,7 @@ Public Class DynamicBlockParser
         scope.SetVariable("__request", req)
         scope.SetVariable("__data", data)
         scope.SetVariable("__parser", CassandraParser)
+        scope.SetVariable("__response", res)
 
         Dim compiled = source.Compile
 

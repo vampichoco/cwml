@@ -6,21 +6,8 @@
 Public Class StandardParsers
     Implements iBlockParserList
 
-    Private _blockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, XElement))
+
     Private _cassandra As CassandraParser
-
-
-    ''' <summary>
-    ''' Get a list of all the functions used to parse CWML blocks
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public ReadOnly Property BlockParsers As Dictionary(Of String, Func(Of XElement, Web.HttpRequest, XElement)) Implements iBlockParserList.BlockParsers
-        Get
-            Return _blockParsers
-        End Get
-    End Property
 
     ''' <summary>
     ''' Gets a class used to parse CWML blocks
@@ -43,11 +30,9 @@ Public Class StandardParsers
     Public Sub New(ByVal CassandraParser As CassandraParser)
         _cassandra = CassandraParser
 
-        _blockParsers = New Dictionary(Of String, Func(Of XElement, Web.HttpRequest, XElement))
-
         'Add all the parsers to the list here 
 
-        With _blockParsers
+        With CassandraParser.BlockParsers
             .Add("page", AddressOf ParsePage)
             .Add("head", AddressOf ParseHead)
             .Add("content", AddressOf ParseBody)
@@ -72,9 +57,9 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParsePage(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParsePage(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim content = <html>
-                          <%= From item In data.Elements Select CassandraParser.Parse(item, req) %>
+                          <%= From item In data.Elements Select CassandraParser.Parse(item, req, res) %>
                       </html>
 
         Return content
@@ -88,9 +73,9 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParseHead(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseHead(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim Content = <head>
-                          <%= From item In data.Elements Select CassandraParser.Parse(item, req) %>
+                          <%= From item In data.Elements Select CassandraParser.Parse(item, req, res) %>
                       </head>
 
         Return Content
@@ -103,9 +88,9 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParseBody(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseBody(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim content = <body>
-                          <%= From item In data.Elements Select CassandraParser.Parse(item, req) %>
+                          <%= From item In data.Elements Select CassandraParser.Parse(item, req, res) %>
                       </body>
 
         Return content
@@ -118,7 +103,7 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParseImage(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseImage(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim content = <img src=<%= data.Value %>/>
         Return content
     End Function
@@ -130,7 +115,7 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParseLink(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseLink(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim content = <a href=<%= data.Attribute("goesto").Value %>>
                       </a>
 
@@ -138,7 +123,7 @@ Public Class StandardParsers
             content.Value = data.Value
         Else
             'Dim parsed = CassandraParser.Parse(data.Elements.First, req)
-            content.Add(CassandraParser.Parse(data.Elements.First, req))
+            content.Add(CassandraParser.Parse(data.Elements.First, req, res))
         End If
 
         Return content
@@ -151,7 +136,7 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParseH1(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseH1(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim content = <h1><%= data.Value %></h1>
         Return content
     End Function
@@ -163,7 +148,7 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParseBr(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseBr(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Return <br/>
     End Function
 
@@ -174,7 +159,7 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParseP(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseP(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim content = <p <%= From item In data.Attributes Select item %>>
 
                       </p>
@@ -183,7 +168,7 @@ Public Class StandardParsers
             content.Value = data.Value
         Else
             For Each item In data.Elements
-                content.Add(CassandraParser.Parse(item, req))
+                content.Add(CassandraParser.Parse(item, req, res))
             Next
         End If
 
@@ -199,7 +184,7 @@ Public Class StandardParsers
     ''' <param name="req">Request of the page that must be parsed</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function ParseText(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseText(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim lines = data.Value.Split(vbLf)
         Dim result = <p <%= From item In data.Attributes Select item %>>
                          <div>
@@ -210,7 +195,7 @@ Public Class StandardParsers
         Return result
     End Function
 
-    Public Function ParseCss(ByVal data As XElement, req As Web.HttpRequest) As XElement
+    Public Function ParseCss(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
         Dim content = <link rel="stylesheet" type="text/css" href=<%= data.Value %>/>
         Return content
     End Function

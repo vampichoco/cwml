@@ -6,14 +6,7 @@ CassandraParser
 </name>
 </assembly>
 <members>
-<member name="P:CWML.StandardParsers.BlockParsers">
-	<summary>
- Get a list of all the functions used to parse CWML blocks
- </summary>
-	<value></value>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="P:CWML.StandardParsers.CassandraParser">
+<member name="P:CWML.StandardParsers.CassandraParser">
 	<summary>
  Gets a class used to parse CWML blocks
  </summary>
@@ -26,7 +19,7 @@ CassandraParser
  </summary>
 	<param name="CassandraParser">The cassandra parser that will make the parsing function</param>
 	<remarks></remarks>
-</member><member name="M:CWML.StandardParsers.ParsePage(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+</member><member name="M:CWML.StandardParsers.ParsePage(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
 	<summary>
  Parse a page block element 
  </summary>
@@ -34,7 +27,7 @@ CassandraParser
 	<param name="req">Request of the page that must be parsed</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:CWML.StandardParsers.ParseHead(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+</member><member name="M:CWML.StandardParsers.ParseHead(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
 	<summary>
  Parse a head block element 
  </summary>
@@ -42,7 +35,7 @@ CassandraParser
 	<param name="req">Request of the page that must be parsed</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:CWML.StandardParsers.ParseBody(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+</member><member name="M:CWML.StandardParsers.ParseBody(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
 	<summary>
  Parse a body block element
  </summary>
@@ -50,7 +43,7 @@ CassandraParser
 	<param name="req">Request of the page that must be parsed</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:CWML.StandardParsers.ParseImage(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+</member><member name="M:CWML.StandardParsers.ParseImage(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
 	<summary>
  Parse an image block element
  </summary>
@@ -58,9 +51,41 @@ CassandraParser
 	<param name="req">Request of the page that must be parsed</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:CWML.StandardParsers.ParseLink(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+</member><member name="M:CWML.StandardParsers.ParseLink(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
 	<summary>
  Parse a link block element
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CWML.StandardParsers.ParseH1(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
+	<summary>
+ Parse a h1 block element
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CWML.StandardParsers.ParseBr(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
+	<summary>
+ Parse a br block element
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CWML.StandardParsers.ParseP(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
+	<summary>
+ Parse a p block element
+ </summary>
+	<param name="data">Xml Element containing data to be parsed</param>
+	<param name="req">Request of the page that must be parsed</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CWML.StandardParsers.ParseText(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
+	<summary>
+ Takes the inner data and then creates a properly html formed output to keep lines structure.
  </summary>
 	<param name="data">Xml Element containing data to be parsed</param>
 	<param name="req">Request of the page that must be parsed</param>
@@ -91,7 +116,7 @@ CassandraParser
 	<value></value>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:CWML.CassandraParser.Parse(System.Xml.Linq.XElement,System.Web.HttpRequest)">
+</member><member name="M:CWML.CassandraParser.Parse(System.Xml.Linq.XElement,System.Web.HttpRequest,System.Web.HttpResponse)">
 	<summary>
  Parse one CWML block into an HTML block
  </summary>

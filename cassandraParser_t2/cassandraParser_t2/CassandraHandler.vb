@@ -27,36 +27,22 @@ Public Class CassandraHandler
         Dim xDoc As XDocument = XDocument.Load(physicalPath)
 
         Dim parser As New CWML.CassandraParser
-
-        Dim stdLib As New CWML.StandardParsers(parser)
-
-        For Each blockParser In stdLib.BlockParsers
-            parser.BlockParsers.Add(blockParser.Key, blockParser.Value)
-        Next
-
-
         parser.UseDefaultCss = True
 
+        Dim stdLib As New CWML.StandardParsers(parser)
 
 
         'This is a sample of how to add custom parsers 
 
         Dim custom As New CustomParsers(parser)
 
-        For Each bParser In custom.BlockParsers
-            parser.BlockParsers.Add(bParser.Key, bParser.Value)
-        Next
 
         'Load parser for Dynamic block. 
 
         Dim DynamicParser As New DynamicBlockParser(parser)
 
-        For Each bParser In DynamicParser.BlockParsers
-            parser.BlockParsers.Add(bParser.Key, bParser.Value)
-        Next
 
-
-        Dim parsed = parser.Parse(xDoc.Elements.First, context.Request)
+        Dim parsed = parser.Parse(xDoc.Elements.First, context.Request, context.Response)
         context.Response.Write(parsed.ToString)
 
 

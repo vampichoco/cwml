@@ -6,7 +6,12 @@ DynamicBlock
 </name>
 </assembly>
 <members>
-<member name="P:CWML.My.Resources.Resources.ResourceManager">
+<member name="T:CWML.DynamicBlockParser">
+	<summary>
+ Provides dynamic execution of blocks containing IronPython code
+ </summary>
+	<remarks></remarks>
+</member><member name="P:CWML.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
 </summary>
