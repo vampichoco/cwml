@@ -22,6 +22,18 @@
 
     <elle />
 
+    <link goesto="index.cwml">@test</link>
+
+    <query collection="cassandra">
+      <filter type="equals">
+        <name>name</name>
+        <value>Leila</value>
+      </filter>
+      <output>
+        <![CDATA[<person><Name>@name</Name><Location>@location</Location></person>]]>
+      </output>
+    </query>
+
     <p>
       <link goesto="dynamic.cwml">In cwml now you can use dynamic blocks</link>
     </p>
@@ -36,6 +48,7 @@
       <link goesto="https://github.com/vampichoco/cwml">
         Check the source of this project
       </link>
+
 
     </p>
 

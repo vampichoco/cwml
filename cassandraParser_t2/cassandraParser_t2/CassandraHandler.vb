@@ -20,30 +20,39 @@ Public Class CassandraHandler
 
     Public Sub ProcessRequest(ByVal context As HttpContext) Implements IHttpHandler.ProcessRequest
 
-        ' Write your handler implementation here.
-
         Dim physicalPath As String = context.Server.MapPath(context.Request.Path)
+        Dim file As New System.IO.FileInfo(physicalPath)
 
-        Dim xDoc As XDocument = XDocument.Load(physicalPath)
+        If file.Exists = False Then
+            context.Response.Write("(404) file not found")
+        Else
+            Dim xDoc As XDocument = XDocument.Load(physicalPath)
 
-        Dim parser As New CWML.CassandraParser
-        parser.UseDefaultCss = True
-
-        Dim stdLib As New CWML.StandardParsers(parser)
-
-
-        'This is a sample of how to add custom parsers 
-
-        Dim custom As New CustomParsers(parser)
+            Dim parser As New CWML.CassandraParser
+            parser.UseDefaultCss = True
 
 
-        'Load parser for Dynamic block. 
 
-        Dim DynamicParser As New DynamicBlockParser(parser)
+            Dim stdLib As New CWML.StandardParsers(parser)
 
 
-        Dim parsed = parser.Parse(xDoc.Elements.First, context.Request, context.Response)
-        context.Response.Write(parsed.ToString)
+            'This is a sample of how to add custom parsers 
+
+            Dim custom As New CustomParsers(parser)
+
+
+            'Load parser for Dynamic block. 
+
+            Dim DynamicParser As New DynamicBlockParser(parser)
+
+            Dim parseContext As New CWML.ParseContext(context.Request, context.Response) With {.Request = context.Request, .Response = context.Response}
+            parseContext.Variables.Add("@test", "Hello, World!")
+
+            Dim parsed = parser.Parse(xDoc.Elements.First, parseContext)
+            context.Response.Write(parsed.ToString)
+        End If
+
+
 
 
 

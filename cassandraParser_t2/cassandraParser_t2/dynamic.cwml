@@ -5,6 +5,10 @@
   </head>
   <content>
     <header />
+    <form action="dynamic.cwml" method="post">
+      <textBox id="tb1" />
+      <button id="button1">Submit</button>
+    </form>
     <dynamic>
       <![CDATA[import clr;
 clr.AddReference("System");
@@ -16,9 +20,16 @@ from System import *
 from System.Xml import * 
 from System.Xml.Linq import *
 
-p = XElement("p"); 
-p.SetValue("hello from cwml"); 
+tb1 = "hello from cwml"
 
+
+if __request.Form["tb1"] is None: 
+  tb1 = "hello from cwml" 
+else:
+  tb1 = __request.Form["tb1"] 
+
+p = XElement("p"); 
+p.SetValue(tb1); 
 __result = __parser.SetDefaultCss(__data, p);
   
 hello = "Hello World";]]>

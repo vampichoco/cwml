@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <head>
+    <css>style.css</css>
+  </head>
+  <content>
+    <header />
+    <form method="post" action="datainsert.cwml">
+      <textBox id="__password" />
+      <textBox id="name" />
+      <textBox id="location" />
+      <button id="submit">Insert!</button>
+    </form>
+    <dataInsert collection="cassandra" presenceOf="@form/__password @form/name @form/location" insertPassword="jaja">
+      <data>
+        <element>
+          <name>name</name>
+          <value>@form/name</value>
+        </element>
+        <element>
+          <name>location</name>
+          <value>@form/location</value>
+        </element>
+      </data>
+      <ready>
+        <div>All ok!</div>
+      </ready>
+      <error>
+        <div>Something is wrong =(</div>
+        <div>@system/error</div>
+        <!--<div>@system/error/stackTrace</div>-->
+      </error>
+    </dataInsert>
+  </content>
+</page>

@@ -93,19 +93,29 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cam.xml" />
+    <Content Include="cam.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="camTest.html" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="index.cwml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="bio.cwml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="datainsert.cwml" />
+    <None Include="query.cwml">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="dynamic.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="camera.cwml">
       <SubType>Designer</SubType>
     </Content>
     <None Include="elle1.cwml">
@@ -200,7 +210,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>15168</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/cassandraParser_t2</IISUrl>
+          <IISUrl>http://localhost/cassandra</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

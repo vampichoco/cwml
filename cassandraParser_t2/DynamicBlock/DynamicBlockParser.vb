@@ -2,6 +2,10 @@
 Imports Microsoft.Scripting
 Imports Microsoft.Scripting.Hosting
 
+Imports MongoDB.Bson
+Imports MongoDB.Driver
+Imports MongoDB.Driver.Builders
+
 ''' <summary>
 ''' Provides dynamic execution of blocks containing IronPython code
 ''' </summary>
@@ -11,8 +15,6 @@ Public Class DynamicBlockParser
 
 
     Private _cassandraParser As CWML.CassandraParser
-
-    
 
     Public ReadOnly Property CassandraParser As CWML.CassandraParser Implements CWML.iBlockParserList.CassandraParser
         Get
@@ -29,17 +31,17 @@ Public Class DynamicBlockParser
 
     End Sub
 
-    Public Function ParseDynamic(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
+    Public Function ParseDynamic(ByVal data As XElement, context As ParseContext) As XElement
         Dim script = data.Value
 
         Dim engine = Python.CreateEngine
         Dim scope = engine.CreateScope
         Dim source = engine.CreateScriptSourceFromString(script, SourceCodeKind.Statements)
 
-        scope.SetVariable("__request", req)
+        scope.SetVariable("__request", context.Request)
         scope.SetVariable("__data", data)
         scope.SetVariable("__parser", CassandraParser)
-        scope.SetVariable("__response", res)
+        scope.SetVariable("__response", context.Response)
 
         Dim compiled = source.Compile
 

@@ -1,11 +1,11 @@
 ﻿
 Public Class CassandraParser
-    Private _blockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, System.Web.HttpResponse, XElement))
+    Private _blockParsers As Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
 
     Private _useDefaultCss As Boolean
 
     Public Sub New()
-        _blockParsers = New Dictionary(Of String, Func(Of XElement, Web.HttpRequest, Web.HttpResponse, XElement))
+        _blockParsers = New Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
     End Sub
 
     ''' <summary>
@@ -14,7 +14,7 @@ Public Class CassandraParser
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public ReadOnly Property BlockParsers As Dictionary(Of String, Func(Of XElement, System.Web.HttpRequest, System.Web.HttpResponse, XElement))
+    Public ReadOnly Property BlockParsers As Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
         Get
             Return _blockParsers
         End Get
@@ -33,15 +33,28 @@ Public Class CassandraParser
     ''' Parse one CWML block into an HTML block
     ''' </summary>
     ''' <param name="data">Xml Element containing CWML data</param>
-    ''' <param name="req">Request information</param>
     ''' <returns>One Xml Element containing parsed data into HTML</returns>
     ''' <remarks></remarks>
-    Public Function Parse(ByVal data As XElement, req As System.Web.HttpRequest, res As Web.HttpResponse) As XElement
-        Dim act = BlockParsers(data.Name.ToString)
+    Public Function Parse(ByVal data As XElement, context As ParseContext) As XElement
+        Dim blockName As String = data.Name.ToString
+        If data.Attributes.SingleOrDefault(Function(a) a.Name = "inherits") IsNot Nothing Then
+            blockName = data.Attributes.SingleOrDefault(Function(a) a.Name = "inherits")
+        End If
+        Dim act = BlockParsers(blockName)
         ''If data.NodeType = Xml.XmlNodeType.Text Then
         ''    Return data
         ''Else
-        Return act.Invoke(data, req, res)
+
+        If data.HasElements = False Then
+            If data.Value.StartsWith("@") Then
+                Dim varValue As String = context.Variables(data.Value)
+                data.SetValue(varValue)
+            Else
+                data.SetValue(data.Value)
+            End If
+        End If
+
+        Return act.Invoke(data, context)
         'End If
 
     End Function

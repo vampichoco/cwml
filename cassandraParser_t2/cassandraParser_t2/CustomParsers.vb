@@ -33,26 +33,29 @@ Public Class CustomParsers
             .Add("elle", AddressOf ParseElle)
             .Add("bitly", AddressOf parseBitly)
             .Add("camera", AddressOf parseCamera)
+            .Add("person", AddressOf ParsePerson)
+            .Add("Name", AddressOf ParseName)
+            .Add("Location", AddressOf ParseLocation)
         End With
 
     End Sub
 
 #Region "Parsers"
-    Public Function ParseHeader(ByVal data As XElement, ByVal req As Web.HttpRequest, res As Web.HttpResponse) As XElement
+    Public Function ParseHeader(ByVal data As XElement, context As ParseContext) As XElement
         Dim content = <div>
                           <h1>My site of Elle fanning</h1>
-                          <%= From item In data.Elements Select _cassandra.Parse(item, req, res) %>
+                          <%= From item In data.Elements Select _cassandra.Parse(item, context) %>
                       </div>
 
         Return CassandraParser.SetDefaultCss(data, content)
     End Function
 
-    Public Function ParsePlain(ByVal data As XElement, ByVal req As Web.HttpRequest, res As Web.HttpResponse) As XElement
+    Public Function ParsePlain(ByVal data As XElement, context As ParseContext) As XElement
         Dim content = <div><%= data.Value %></div>
         Return content
     End Function
 
-    Public Function ParseElle(ByVal data As XElement, ByVal req As Web.HttpRequest, res As Web.HttpResponse) As XElement
+    Public Function ParseElle(ByVal data As XElement, context As ParseContext) As XElement
         Dim ellebd As New DateTime(1988, 4, 9)
         Dim td As DateTime = DateTime.Now
 
@@ -76,7 +79,7 @@ Public Class CustomParsers
         Return CassandraParser.SetDefaultCss(data, Content)
     End Function
 
-    Public Function parseBitly(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
+    Public Function parseBitly(ByVal data As XElement, context As ParseContext) As XElement
         Dim longUrl = HttpUtility.UrlEncode(data.Value)
         Dim apiUrl As String =
             String.Format("https://api-ssl.bitly.com/v3/shorten?login={0}&apiKey={1}&longUrl={2}&format=txt", bitlyLogin, BitlyApiKey, longUrl)
@@ -91,9 +94,9 @@ Public Class CustomParsers
         Return content
     End Function
 
-    Public Function parseCamera(ByVal data As XElement, req As Web.HttpRequest, res As Web.HttpResponse) As XElement
+    Public Function parseCamera(ByVal data As XElement, context As ParseContext) As XElement
 
-        Dim xDoc As XDocument = XDocument.Load(req.MapPath("cam.xml"))
+        Dim xDoc As XDocument = XDocument.Load(context.Request.MapPath("cam.xml"))
 
         Dim container = <div>
                             <%= From item In xDoc.<cam>.Elements Select item %>
@@ -103,7 +106,26 @@ Public Class CustomParsers
 
     End Function
 
-   
+    Public Function ParseName(ByVal data As XElement, context As ParseContext) As XElement
+        Return <div>Name: <%= data.Value %></div>
+    End Function
+
+    Public Function ParseLocation(ByVal data As XElement, context As ParseContext) As XElement
+        Return <div>Location: <!-- Location--><%= data.Value %></div>
+    End Function
+
+    Public Function ParsePerson(ByVal data As XElement, context As ParseContext) As XElement
+
+        Dim container = <div>
+                            <%= From item In data.Elements Select CassandraParser.Parse(item, context) %>
+                        </div>
+
+
+        Return container
+
+    End Function
+
+
 #End Region
 
 End Class

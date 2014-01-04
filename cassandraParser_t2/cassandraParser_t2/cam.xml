@@ -6,7 +6,7 @@
         console.log('Reeeejected!', e);
     };
 
-    // Not showing vendor prefixes.
+    
     window.URL = window.URL || window.webkitURL;
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
                               navigator.mozGetUserMedia || navigator.msGetUserMedia;
