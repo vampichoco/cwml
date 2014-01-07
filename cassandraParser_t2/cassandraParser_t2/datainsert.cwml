@@ -11,16 +11,10 @@
       <textBox id="location" />
       <button id="submit">Insert!</button>
     </form>
-    <dataInsert collection="cassandra" presenceOf="@form/__password @form/name @form/location" insertPassword="jaja">
+    <dataInsert collection="cassandra" presenceOf="@form/__password @form/name @form/location" insertPassword="badpassword">
       <data>
-        <element>
-          <name>name</name>
-          <value>@form/name</value>
-        </element>
-        <element>
-          <name>location</name>
-          <value>@form/location</value>
-        </element>
+        <element name="name" value="@form/name" as="string" />
+        <element name="location" value="@form/location" as="string" />
       </data>
       <ready>
         <div>All ok!</div>

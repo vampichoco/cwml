@@ -25,12 +25,11 @@
     <link goesto="index.cwml">@test</link>
 
     <query collection="cassandra">
-      <filter type="equals">
-        <name>name</name>
-        <value>Leila</value>
-      </filter>
-      <output>
-        <![CDATA[<person><Name>@name</Name><Location>@location</Location></person>]]>
+      <condition>
+        <equals name="name" value="Leila" />
+      </condition>
+      <output inherits="div">
+        <person><Name>@name</Name><Location>@location</Location></person>
       </output>
     </query>
 

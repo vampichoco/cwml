@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <head>
+    <css>style.css</css>
+  </head>
+  <content>
+    <header />
+    <query collection="blog">
+      <condition>
+        <all />
+      </condition>
+      <output inherits="div"><entry inherits="div">
+      <entryTitle inherits="h1">@title</entryTitle>
+      <author inherits="div">@author</author>
+      <entryText inherits="div">@entryText</entryText>
+      </entry>
+      </output>
+    </query>
+  </content>
+</page>

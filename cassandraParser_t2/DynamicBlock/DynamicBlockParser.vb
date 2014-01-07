@@ -51,7 +51,5 @@ Public Class DynamicBlockParser
 
         Return XResult
     End Function
-
-
    
 End Class

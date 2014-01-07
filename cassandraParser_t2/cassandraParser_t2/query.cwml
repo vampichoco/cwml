@@ -11,14 +11,16 @@
     </form>
     <link goesto="datainsert.cwml">Insert data</link>
     <query collection="cassandra" presenceOf="@form/location">
-      <filter type="equals">
-        <name>location</name>
-        <value>@form/location</value>
-      </filter>
-      <output><![CDATA[<person>
-      <Name>@name</Name>
-      <Location>@location</Location>
-      </person>]]></output>
+      <condition>
+        <equals name="location" value="@form/location" />
+      </condition>
+      <sort name="name" type="ascending" />
+      <output inherits="div">
+        <person>
+          <Name>@name</Name>
+          <Location>@location</Location>
+        </person>
+      </output>
     </query>
   </content>
 </page>

@@ -20,6 +20,15 @@
             _variables.Add("@queryString/" & item, Request.QueryString(item))
         Next
 
+        For Each item In Request.Files.Keys
+            Dim file As System.Web.HttpPostedFile = Request.Files.Item(item)
+            Dim ms As New IO.MemoryStream
+            file.InputStream.CopyTo(ms)
+            _variables.Add("@files/" & item, Convert.ToBase64String(ms.ToArray))
+            ms.Close()
+
+        Next
+
     End Sub
 
     Public Property Request As Web.HttpRequest
@@ -45,7 +54,5 @@
             Return _variables
         End Get
     End Property
-
-
 
 End Class

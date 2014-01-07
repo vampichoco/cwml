@@ -48,7 +48,7 @@ Public Class CassandraHandler
             Dim parseContext As New CWML.ParseContext(context.Request, context.Response) With {.Request = context.Request, .Response = context.Response}
             parseContext.Variables.Add("@test", "Hello, World!")
 
-            Dim parsed = parser.Parse(xDoc.Elements.First, parseContext)
+            Dim parsed = parser.Parse(xDoc.Element("page"), parseContext)
             context.Response.Write(parsed.ToString)
         End If
 

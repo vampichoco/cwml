@@ -14,9 +14,6 @@ Public Class CustomParsers
     'User for bit.ly shorten links 
     Private bitlyLogin = ""
     Private BitlyApiKey = ""
-
-    
-
     Public ReadOnly Property CassandraParser As CWML.CassandraParser Implements CWML.iBlockParserList.CassandraParser
         Get
             Return _cassandra
@@ -36,6 +33,8 @@ Public Class CustomParsers
             .Add("person", AddressOf ParsePerson)
             .Add("Name", AddressOf ParseName)
             .Add("Location", AddressOf ParseLocation)
+            .Add("entryInput", AddressOf parseEntryInput)
+            .Add("rawImage", AddressOf parseRawImage)
         End With
 
     End Sub
@@ -123,6 +122,30 @@ Public Class CustomParsers
 
         Return container
 
+    End Function
+
+    Public Function parseEntry(ByVal data As XElement, context As ParseContext) As XElement
+        Dim entry = <div>
+                        <h1><%= data.<entryTitle> %></h1>
+                        <strong>By <%= data.<author> %></strong>
+                        <div><%= data.<entryText> %></div>
+                    </div>
+
+        Return entry
+    End Function
+
+    Public Function parseEntryInput(ByVal data As XElement, context As ParseContext) As XElement
+        Dim textarea = <textarea rows="4" cols="50" name=<%= data.@id %> id=<%= data.@id %>>
+
+                       </textarea>
+
+        Return textarea
+    End Function
+
+    Public Function parseRawImage(ByVal data As XElement, context As ParseContext) As XElement
+
+        Dim img = <img src=<%= "data:image/jpeg;base64," & data.Value %> alt="binary image"/>
+        Return img
     End Function
 
 

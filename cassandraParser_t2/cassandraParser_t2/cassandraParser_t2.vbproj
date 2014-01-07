@@ -104,7 +104,17 @@
     <Content Include="bio.cwml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="datainsert.cwml" />
+    <Content Include="datainsert.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="addentry.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="blog.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="fileupload.cwml" />
+    <Content Include="files.cwml" />
     <None Include="query.cwml">
       <SubType>Designer</SubType>
     </None>

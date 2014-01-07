@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <head>
+    <css>style.css</css>
+  </head>
+  <content>
+    <header />
+    <query collection="files">
+      <condition>
+        <all />
+      </condition>
+      <output inherits="div">
+        <h1>@filename</h1>
+        <rawImage>@file</rawImage>
+      </output>
+    </query>
+  </content>
+</page>

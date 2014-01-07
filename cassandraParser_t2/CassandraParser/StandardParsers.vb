@@ -55,6 +55,7 @@ Public Class StandardParsers
             .Add("dataInsert", AddressOf ParseDataInsert)
             .Add("ready", AddressOf ParseReady)
             .Add("error", AddressOf ParseError)
+            .Add("upload", AddressOf parseFileUpload)
         End With
 
     End Sub
@@ -221,7 +222,7 @@ Public Class StandardParsers
     End Function
 
     Public Function ParseForm(ByVal data As XElement, context As ParseContext) As XElement
-        Dim content = <form action=<%= data.Attribute("action").Value %> method=<%= data.Attribute("method").Value %>>
+        Dim content = <form action=<%= data.Attribute("action").Value %> method=<%= data.Attribute("method").Value %> enctype="multipart/form-data">
                           <%= From item In data.Elements Select _cassandra.Parse(item, context) %>
                       </form>
 
@@ -248,9 +249,16 @@ Public Class StandardParsers
                     </input>
     End Function
 
+    Public Function parseFileUpload(ByVal data As XElement, context As ParseContext) As XElement
+        Dim fileupload = <input type="file" id=<%= data.Attribute("id").Value %> name=<%= data.Attribute("id").Value %>/>
+
+        Return fileupload
+    End Function
+
     Public Function ParseQuery(ByVal data As XElement, context As ParseContext) As XElement
 
         Dim checkPresenceOf As Boolean = False
+        Dim sortedquery As Boolean = False
 
         If data.@presenceOf IsNot Nothing Then
 
@@ -278,46 +286,74 @@ Public Class StandardParsers
 
             Dim collection = dataBase.GetCollection(collectionName)
 
-            Dim filter = data.<filter>
-            Dim type As String = filter.@type
+            Dim condition = data.<condition>.Elements.First
 
-            Select Case type
-                Case "equals"
-                    Dim name As String = filter.<name>.Value
-                    Dim value As String = filter.<value>.Value
+            Dim sort = Nothing
+            If data.Elements.SingleOrDefault(Function(e) e.Name = "sort") IsNot Nothing Then
+                sortedquery = True
+                Dim sortData = data.Elements.SingleOrDefault(Function(e) e.Name = "sort")
+                Dim attrName = sortData.@name
+                Dim sortType = sortData.@type
 
-                    If name.StartsWith("@") Then
-                        name = context.Variables(name)
-                    End If
+                Select Case sortType
+                    Case "ascending"
+                        sort = SortBy.Ascending(attrName.Split(","))
+                    Case "descending"
+                        sort = SortBy.Descending(attrName.Split(","))
+                    Case Else
+                        sort = SortBy.Null
+                End Select
 
-                    If value.StartsWith("@") Then
-                        value = context.Variables(value)
-                    End If
+            End If
 
-                    Dim _query = collection.Find(Query.EQ(name, value))
+            Dim queryExpression = CassandraParser.ParseQueryCondition(condition, context)
 
-                    Dim queryop = <div></div>
+            Dim _query As MongoCursor(Of BsonDocument)
+
+            If condition.Name = "all" Then
+                If sortedquery Then
+                    _query = collection.FindAll().SetSortOrder(sort)
+                Else
+                    _query = collection.FindAll()
+                End If
+
+            Else
+                If sortedquery Then
+                    _query = collection.Find(queryExpression).SetSortOrder(sort)
+                Else
+                    _query = collection.Find(queryExpression)
+                End If
 
 
-                    For Each item In _query
-                        Dim outputPattern = XElement.Parse(data.<output>.Value)
-                        Dim ctx As New CWML.ParseContext(context.Request, context.Response)
+            End If
 
-                        For Each attr In item.Names
+            Dim queryop = <div></div>
+
+            Dim opPattern = data.Element("output")
+
+            For Each item In _query
+                Dim op As New XElement(opPattern)
+                Dim ctx As New CWML.ParseContext(context.Request, context.Response)
+
+                For Each attr In item.Names
+                    Dim element = item(attr)
+                    Select Case element.BsonType
+                        Case BsonType.Binary
+                            ctx.Variables.Add("@" & attr, Convert.ToBase64String(element.AsBsonBinaryData.Bytes))
+                        Case Else
                             ctx.Variables.Add("@" & attr, item(attr).ToString)
-                        Next
+                    End Select
 
-                        queryop.Add(_cassandra.Parse(outputPattern, ctx))
-
-                    Next
-
-                    Return queryop
-
-                Case Else
-                    Return <div>Error</div>
+                Next
 
 
-            End Select
+                queryop.Add(_cassandra.Parse(op, ctx))
+
+            Next
+
+            Return queryop
+
+
         Else
             Return <div></div>
         End If
@@ -325,7 +361,6 @@ Public Class StandardParsers
 
 
     End Function
-
     Public Function ParseDataInsert(ByVal data As XElement, context As ParseContext) As XElement
         Dim checkPresenceOf As Boolean = False
 
@@ -344,7 +379,10 @@ Public Class StandardParsers
         If context.Request.Form("__password") Is Nothing Then
             checkPresenceOf = False
         Else
-            If context.Request.Form("__password") = data.@insertPassword = False Then
+            Dim passInForm As String = context.Request.Form("__password")
+            Dim pass = data.@insertPassword
+
+            If (passInForm = pass) = False Then
                 checkPresenceOf = False
             End If
         End If
@@ -365,17 +403,9 @@ Public Class StandardParsers
 
                 For Each item In data.<data>...<element>
 
-                    Dim name As String = item.<name>.Value
-                    If name.StartsWith("@") Then
-                        name = context.Variables(name)
-                    End If
+                    Dim value = parseDataElement(item, context)
 
-                    Dim value As String = item.<value>.Value
-                    If value.StartsWith("@") Then
-                        value = context.Variables(value)
-                    End If
-
-                    document.Add(name, value)
+                    document.Add(value)
                 Next
 
                 collection.Insert(document)
@@ -396,6 +426,49 @@ Public Class StandardParsers
 
     End Function
 
+    Public Function ParseDataType(ByVal strType As String) As BsonType
+        Select Case strType
+            Case "string"
+                Return BsonType.String
+            Case "int"
+                Return BsonType.Int32
+            Case "bigint"
+                Return BsonType.Int64
+            Case "dateTime"
+                Return BsonType.DateTime
+            Case "binary"
+                Return BsonType.Binary
+            Case Else
+                Return BsonType.String
+        End Select
+    End Function
+
+    Public Function parseDataElement(ByVal data As XElement, ByVal context As ParseContext) As BsonElement
+        Dim type = ParseDataType(data.@as)
+        Dim name = data.@name
+        Dim value = data.@value
+
+        If value.StartsWith("@") Then : value = context.Variables(value)
+        End If
+
+
+        Select Case type
+            Case BsonType.String
+                Return New BsonElement(name, New BsonString(value))
+            Case BsonType.Int32
+                Return New BsonElement(name, New BsonInt32(Integer.Parse(value)))
+            Case BsonType.Int64
+                Return New BsonElement(name, New BsonInt64(Int64.Parse(value)))
+            Case BsonType.DateTime
+                Return New BsonElement(name, New BsonDateTime(Date.Parse(value)))
+            Case BsonType.Binary
+                Dim val As New BsonBinaryData(Convert.FromBase64String(value))
+                Return New BsonElement(name, val)
+            Case Else
+                Return New BsonElement(name, New BsonString(value))
+        End Select
+    End Function
+
     Public Function ParseReady(data As XElement, context As ParseContext) As XElement
         Dim result = <div>
                          <%= From item In data.Elements Select CassandraParser.Parse(item, context) %>
@@ -410,6 +483,12 @@ Public Class StandardParsers
                      </div>
 
         Return result
+    End Function
+
+    Public Function parseRawImage(ByVal data As XElement, context As ParseContext) As XElement
+
+        Dim img = <img src=<%= "data:image/jpeg;base64," & data.Value %> alt="binary image"/>
+        Return img
     End Function
 
 
