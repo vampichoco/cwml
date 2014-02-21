@@ -2,7 +2,7 @@
 
 cwml Or Cassandra/Custom Web Markup Language is a new way to write web sites, designed to be simple, portable and expandable for the requeriments of every indivual web site.
 
-cwml is a compiler that converts a custom markup file into an HTML file. As the compiler es flexible, you can add elements and créate your own markup language. 
+cwml is a compiler that converts a custom markup file into an HTML file. As the compiler is flexible, you can add elements and créate your own markup language. 
 
 imagine for example that you want to display in web browser information about an user, you should write a lot of boring HTML code, But in cwml you can use your own markup, like this: 
 `
