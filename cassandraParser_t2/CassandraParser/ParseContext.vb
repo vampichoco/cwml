@@ -2,6 +2,9 @@
     Private _request As Web.HttpRequest
     Private _response As Web.HttpResponse
     Private _variables As Dictionary(Of String, String)
+    Private _debug As Boolean
+    Private _fileName As String
+
 
     Public Sub New(req As Web.HttpRequest, resp As Web.HttpResponse)
 
@@ -20,6 +23,7 @@
             _variables.Add("@queryString/" & item, Request.QueryString(item))
         Next
 
+
         For Each item In Request.Files.Keys
             Dim file As System.Web.HttpPostedFile = Request.Files.Item(item)
             Dim ms As New IO.MemoryStream
@@ -28,6 +32,10 @@
             ms.Close()
 
         Next
+
+        'Add system variables 
+
+        _variables.Add("@system/dateTime", DateTime.Now.ToString)
 
     End Sub
 
@@ -54,5 +62,24 @@
             Return _variables
         End Get
     End Property
+
+    Public Property Debug As Boolean
+        Get
+            Return _debug
+        End Get
+        Set(value As Boolean)
+            _debug = value
+        End Set
+    End Property
+
+    Public Property fileName As String
+        Get
+            Return _fileName
+        End Get
+        Set(value As String)
+            _fileName = value
+        End Set
+    End Property
+
 
 End Class

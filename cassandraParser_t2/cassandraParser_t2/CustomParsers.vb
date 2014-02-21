@@ -26,7 +26,6 @@ Public Class CustomParsers
 
         With CassandraParser.BlockParsers
             .Add("header", AddressOf ParseHeader)
-            .Add("plain", AddressOf ParsePlain)
             .Add("elle", AddressOf ParseElle)
             .Add("bitly", AddressOf parseBitly)
             .Add("camera", AddressOf parseCamera)
@@ -35,6 +34,10 @@ Public Class CustomParsers
             .Add("Location", AddressOf ParseLocation)
             .Add("entryInput", AddressOf parseEntryInput)
             .Add("rawImage", AddressOf parseRawImage)
+            .Add("coffeeLib", AddressOf ParseCoffeeLib)
+            .Add("coffee", AddressOf ParseCoffee)
+            .Add("imageEntry", AddressOf ParseImageEntry)
+
         End With
 
     End Sub
@@ -42,7 +45,7 @@ Public Class CustomParsers
 #Region "Parsers"
     Public Function ParseHeader(ByVal data As XElement, context As ParseContext) As XElement
         Dim content = <div>
-                          <h1>My site of Elle fanning</h1>
+                          <h1>CWML - Cassandra Web Markup Language</h1>
                           <%= From item In data.Elements Select _cassandra.Parse(item, context) %>
                       </div>
 
@@ -55,7 +58,7 @@ Public Class CustomParsers
     End Function
 
     Public Function ParseElle(ByVal data As XElement, context As ParseContext) As XElement
-        Dim ellebd As New DateTime(1988, 4, 9)
+        Dim ellebd As New DateTime(1998, 4, 9)
         Dim td As DateTime = DateTime.Now
 
         Dim hbd As XElement = Nothing
@@ -64,7 +67,7 @@ Public Class CustomParsers
         If td.Month = ellebd.Month And td.Day = ellebd.Day Then
             hbd = <div>Happy birthday Elle!</div>
         Else
-            hbd = <div>she born in April 9 1988</div>
+            hbd = <div>she born in April 9 1998</div>
         End If
 
 
@@ -128,7 +131,7 @@ Public Class CustomParsers
         Dim entry = <div>
                         <h1><%= data.<entryTitle> %></h1>
                         <strong>By <%= data.<author> %></strong>
-                        <div><%= data.<entryText> %></div>
+                        <div><%= _cassandra.Parse(data.<entryText>, context) %></div>
                     </div>
 
         Return entry
@@ -146,6 +149,48 @@ Public Class CustomParsers
 
         Dim img = <img src=<%= "data:image/jpeg;base64," & data.Value %> alt="binary image"/>
         Return img
+    End Function
+
+    Public Function ParseImageEntry(ByVal data As XElement, context As ParseContext) As XElement
+        Dim imgstyle = String.Format("background-image: url({0})", data.Value)
+        Dim download = <div><a href=<%= data.Value %>>Download image</a></div>
+        Dim img = <div style=<%= imgstyle %>>
+                      <%= CassandraParser.SetCss("download-area", download) %>
+                  </div>
+
+        Return CassandraParser.SetDefaultCss(data, img)
+
+    End Function
+
+    Public Function ParseVideo(ByVal data As XElement, context As ParseContext) As XElement
+        Dim video = <video width=<%= data.@width.ToString %> height=<%= data.@height %>>
+                        <source src=<%= data.Value %> type=<%= data.@type %>/>
+                    </video>
+
+        Return video
+    End Function
+
+    Public Function parseEntryContent(ByVal data As XElement, context As ParseContext) As XElement
+        Dim parser As New CassandraParser()
+        parser.BlockParsers.Add("elle", AddressOf ParseElle)
+
+        Return parser.Parse(data, context)
+
+
+    End Function
+
+    Public Function ParseCoffee(ByVal data As XElement, context As ParseContext) As XElement
+        Dim result = <script type="text/coffeescript">
+                         <%= data.Value %>
+                     </script>
+
+        Return result
+
+    End Function
+
+    Public Function ParseCoffeeLib(ByVal data As XElement, context As ParseContext) As XElement
+        Dim result = <script type="text/javascript" src="coffee-script.js"></script>
+        Return result
     End Function
 
 

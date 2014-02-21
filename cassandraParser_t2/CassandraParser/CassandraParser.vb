@@ -43,6 +43,11 @@ Public Class CassandraParser
         If data.Attributes.SingleOrDefault(Function(a) a.Name = "inherits") IsNot Nothing Then
             blockName = data.Attributes.SingleOrDefault(Function(a) a.Name = "inherits")
         End If
+
+        If BlockParsers.ContainsKey(blockName) = False Then
+            Throw New Exception(String.Format("Block parsers has no delegate to proccess {0} tag ", blockName))
+        End If
+
         Dim act = BlockParsers(blockName)
         ''If data.NodeType = Xml.XmlNodeType.Text Then
         ''    Return data
@@ -50,20 +55,43 @@ Public Class CassandraParser
 
         If data.HasElements = False Then
             If data.Value.StartsWith("@") Then
+
+                If context.Variables.ContainsKey(data.Value) = False Then
+                    Throw New Exception(String.Format("Variables dictionary does not contains '{0}' variable", data.Value))
+                End If
+
                 Dim varValue As String = context.Variables(data.Value)
                 data.SetValue(varValue)
-            
+
             End If
         End If
 
         'If BlockParsers.ContainsKey(data.Name.ToString) Then
-        Return act.Invoke(data, context)
+        Try
+            Return act.Invoke(data, context)
+        Catch ex As Exception
+            Return <div class="cwml-system-error">
+                       <strong>Error trying to invoke delegate to parse <%= data.Name %></strong>
+                       <div><%= ex.Message %></div>
+                       <div><%= ex.StackTrace %></div>
+                   </div>
+        End Try
+
         'Else
         'Return data
         'End If
         'End If
 
     End Function
+
+    Public Sub Save(context As ParseContext)
+
+
+        Dim physicalPath As String = context.Request.MapPath(context.Request.Path)
+        Dim file As New System.IO.FileInfo(physicalPath)
+
+
+    End Sub
 
     Public Function ParseQueryCondition(ByVal input As XElement, context As ParseContext) As IMongoQuery
         Select Case input.Name.ToString
@@ -121,6 +149,11 @@ Public Class CassandraParser
         Else
             Return target
         End If
+    End Function
+
+    Public Function SetCss(ByVal element As String, target As XElement) As XElement
+        target.SetAttributeValue("class", element)
+        Return target
     End Function
 
 End Class

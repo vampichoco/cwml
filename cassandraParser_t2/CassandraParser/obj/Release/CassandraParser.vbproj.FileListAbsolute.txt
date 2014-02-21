@@ -1,0 +1,12 @@
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Release\CassandraParser.dll
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Release\CassandraParser.pdb
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Release\CassandraParser.xml
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Release\MongoDB.Bson.dll
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Release\MongoDB.Driver.dll
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Release\MongoDB.Bson.xml
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\bin\Release\MongoDB.Driver.xml
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Release\CWML.Resources.resources
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.vbproj.GenerateResource.Cache
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.dll
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.xml
+C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.pdb

@@ -20,20 +20,12 @@
         <button id="submit">Add entry!</button>
       </div>
     </form>
-    <dataInsert collection="blog" presenceOf="@form/__password @form/entryTitle @form/entryText" insertPassword="1234">
+    <dataInsert collection="blog1" presenceOf="@form/__password @form/entryTitle @form/entryText" insertPassword="l3ila">
       <data>
-        <element>
-          <name>author</name>
-          <value>Eskimo</value>
-        </element>
-        <element>
-          <name>title</name>
-          <value>@form/entryTitle</value>
-        </element>
-        <element>
-          <name>entryText</name>
-          <value>@form/entryText</value>
-        </element>
+        <element name="author" value="Eskimo" as="string" />
+        <element name="title" value="@form/entryTitle" as="string" />
+        <element name="entryText" value="@form/entryText" as="string" />
+        <element name="dateTime" value="@system/dateTime" as="string" />
       </data>
       <ready>
         <div>entry now in DataBase :D</div>

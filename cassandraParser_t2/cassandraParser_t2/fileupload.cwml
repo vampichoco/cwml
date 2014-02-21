@@ -11,7 +11,7 @@
       <upload id="fileUpload" />
       <button id="submit">Upload file!</button>
     </form>
-    <dataInsert collection="files" presenceOf="@form/__password @form/filename @files/fileUpload" insertPassword="leila">
+    <dataInsert collection="files" presenceOf="@form/__password @form/filename @files/fileUpload" insertPassword="l3ila">
       <data>
         <element name="filename" value="@form/filename" as="string" />
         <element name="file" value="@files/fileUpload" as="binary" />

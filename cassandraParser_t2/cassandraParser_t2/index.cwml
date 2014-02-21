@@ -8,11 +8,11 @@
 
   <content>
     <header>
-      <link goesto="elle.cwml">View an image</link>
-      <link goesto="bio.cwml"> | biography</link>
+      <link goesto="files.cwml">Images</link>
+      <link goesto="blog.cwml">Blog</link>
     </header>
 
-    <h1>Welcome to my site of Elle Fanning</h1>
+    <h1>Welcome to the home of CWML</h1>
 
     <text>
       This web site is developed using CWML.
@@ -20,18 +20,7 @@
       As CWML is extensible, i can add one tag called Elle and then the compiler will create the required HTML to show the biography of Elle
     </text>
 
-    <elle />
-
-    <link goesto="index.cwml">@test</link>
-
-    <query collection="cassandra">
-      <condition>
-        <equals name="name" value="Leila" />
-      </condition>
-      <output inherits="div">
-        <person><Name>@name</Name><Location>@location</Location></person>
-      </output>
-    </query>
+    
 
     <p>
       <link goesto="dynamic.cwml">In cwml now you can use dynamic blocks</link>

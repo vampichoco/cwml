@@ -32,24 +32,25 @@ Public Class CassandraHandler
             parser.UseDefaultCss = True
 
 
+            Dim stdLib As New CWML.StandardParsers(parser) 'Load standard library
+            Dim DynamicParser As New DynamicBlockParser(parser) 'Load dynamic block library
 
-            Dim stdLib As New CWML.StandardParsers(parser)
-
-
-            'This is a sample of how to add custom parsers 
-
-            Dim custom As New CustomParsers(parser)
+            Dim custom As New CustomParsers(parser) 'Load custom blocks parser
 
 
-            'Load parser for Dynamic block. 
+            Dim parseContext As New CWML.ParseContext(context.Request, context.Response)
 
-            Dim DynamicParser As New DynamicBlockParser(parser)
+#If DEBUG Then
+            parseContext.Variables.Add("@system/connectionString", "mongodb://localhost")
+#Else
+            parseContext.Variables.Add("@system/connectionString", "mongodb://localhost")
+#End If
 
-            Dim parseContext As New CWML.ParseContext(context.Request, context.Response) With {.Request = context.Request, .Response = context.Response}
-            parseContext.Variables.Add("@test", "Hello, World!")
-
-            Dim parsed = parser.Parse(xDoc.Element("page"), parseContext)
+            Dim parsed = parser.Parse(xDoc.Elements.First, parseContext)
             context.Response.Write(parsed.ToString)
+
+            parser.Save(parseContext)
+
         End If
 
 

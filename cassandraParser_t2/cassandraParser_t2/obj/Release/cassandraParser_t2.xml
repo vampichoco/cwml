@@ -1,0 +1,47 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+cassandraParser_t2
+</name>
+</assembly>
+<members>
+<member name="P:cassandraParser_t2.CassandraHandler.IsReusable">
+	<summary>
+  You will need to configure this handler in the Web.config file of your 
+  web and register it with IIS before being able to use it. For more information
+  see the following link: http://go.microsoft.com/?linkid=8101007
+ </summary>
+</member><member name="T:cassandraParser_t2.CustomParsers">
+	<summary>
+ This is a sample class to extend parsers of CWML
+ </summary>
+	<remarks></remarks>
+</member><member name="P:cassandraParser_t2.My.MyWebExtension.Computer">
+	<summary>
+ Returns information about the host computer.
+ </summary>
+</member><member name="P:cassandraParser_t2.My.MyWebExtension.User">
+	<summary>
+ Returns information for the current Web user.
+ </summary>
+</member><member name="P:cassandraParser_t2.My.MyWebExtension.Request">
+	<summary>
+ Returns Request object.
+ </summary>
+</member><member name="P:cassandraParser_t2.My.MyWebExtension.Response">
+	<summary>
+ Returns Response object.
+ </summary>
+</member><member name="P:cassandraParser_t2.My.MyWebExtension.Log">
+	<summary>
+ Returns the Asp log object.
+ </summary>
+</member><member name="T:cassandraParser_t2.My.MyWebExtension">
+	<summary>
+ Module used to define the properties that are available in the My Namespace for Web projects.
+ </summary>
+	<remarks></remarks>
+</member>
+</members>
+</doc>

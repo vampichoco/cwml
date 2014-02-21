@@ -97,6 +97,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="camTest.html" />
+    <None Include="createimg.cwml">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="HtmlPage1.html" />
     <Content Include="index.cwml">
       <SubType>Designer</SubType>
@@ -114,7 +117,16 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="fileupload.cwml" />
-    <Content Include="files.cwml" />
+    <Content Include="files.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="file.cwml" />
+    <Content Include="coffee.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="imgblog.cwml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="query.cwml">
       <SubType>Designer</SubType>
     </None>

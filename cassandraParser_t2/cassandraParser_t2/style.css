@@ -1,7 +1,10 @@
 ﻿@import url(http://fonts.googleapis.com/css?family=Pontano+Sans);
 
+
 body {
-    background-color: white;
+    padding:0px;
+    margin:0px;
+    
 }
 
 .cwml-default-p, .cwml-default-div, .cwml-default-text {
@@ -37,5 +40,53 @@ h1 {
     border-radius: 5px;
     font-family: 'Pontano Sans', sans-serif;
 }
+
+.cwml-default-imageEntry {
+    background-position:center;
+    background-attachment:fixed; 
+    height:100%; 
+    background-repeat:no-repeat;
+    overflow:hidden;
+}
+
+.cwml-default-blog {
+    background-image: -webkit-linear-gradient(Top, #0d0137, #550036);
+    background-attachment:fixed;
+    height:100%;
+}
+
+.download-area {
+    background-color:rgba(13, 0, 33, 0.70);
+    text-align:center; 
+
+}
+
+    .download-area a:link { 
+        font-family: 'Pontano Sans', sans-serif; 
+        font-size:x-large;
+        text-decoration:none;
+        color:white;
+    }
+
+    .download-area a:hover { 
+        font-family: 'Pontano Sans', sans-serif; 
+        font-size:x-large;
+        text-decoration:underline;
+        color:white;
+    }
+
+     .download-area a:visited { 
+        font-family: 'Pontano Sans', sans-serif; 
+        font-size:x-large;
+        text-decoration:none;
+        color:white;
+    }
+
+     .download-area a:active { 
+        font-family: 'Pontano Sans', sans-serif; 
+        font-size:x-large;
+        text-decoration:none;
+        color:white;
+    }
 
 

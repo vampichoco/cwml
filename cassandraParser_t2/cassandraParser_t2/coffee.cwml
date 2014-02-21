@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <head>
+    <css>style.css</css>
+    <coffee>
+      <![CDATA[alert "hello Coffee Script"]]>
+    </coffee>
+    <coffeeLib />
+  </head>
+  <content>
+    <header />
+    
+  </content>
+</page>

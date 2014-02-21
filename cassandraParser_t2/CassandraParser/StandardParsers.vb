@@ -56,6 +56,7 @@ Public Class StandardParsers
             .Add("ready", AddressOf ParseReady)
             .Add("error", AddressOf ParseError)
             .Add("upload", AddressOf parseFileUpload)
+            .Add("plain", AddressOf ParsePlain)
         End With
 
     End Sub
@@ -255,7 +256,14 @@ Public Class StandardParsers
         Return fileupload
     End Function
 
+    Public Function ParsePlain(ByVal data As XElement, context As ParseContext) As XElement
+        context.Response.Write(data.Value)
+        Return Nothing
+    End Function
+
     Public Function ParseQuery(ByVal data As XElement, context As ParseContext) As XElement
+
+        Dim connectionString = context.Variables("@system/connectionString")
 
         Dim checkPresenceOf As Boolean = False
         Dim sortedquery As Boolean = False
@@ -278,7 +286,6 @@ Public Class StandardParsers
         If checkPresenceOf = True Then
             Dim collectionName As String = data.@collection
 
-            Dim connectionString As String = "mongodb://localhost"
             Dim client = New MongoClient(connectionString)
 
             Dim server = client.GetServer
@@ -362,6 +369,8 @@ Public Class StandardParsers
 
     End Function
     Public Function ParseDataInsert(ByVal data As XElement, context As ParseContext) As XElement
+        Dim connectionString = context.Variables("@system/connectionString")
+
         Dim checkPresenceOf As Boolean = False
 
         If data.@presenceOf IsNot Nothing Then
@@ -392,7 +401,6 @@ Public Class StandardParsers
             Try
                 Dim collectionName As String = data.@collection
 
-                Dim connectionString As String = "mongodb://localhost"
                 Dim client = New MongoClient(connectionString)
 
                 Dim server = client.GetServer
@@ -448,7 +456,16 @@ Public Class StandardParsers
         Dim name = data.@name
         Dim value = data.@value
 
-        If value.StartsWith("@") Then : value = context.Variables(value)
+        
+
+        If value.StartsWith("@") Then
+
+            If context.Variables.ContainsKey(value) = False Then
+                Throw New Exception(String.Format("Variable '{0}' not found in variable dictionary", value))
+            End If
+
+            value = context.Variables(value)
+
         End If
 
 

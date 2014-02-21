@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <head>
+    <plain><![CDATA[<meta name="viewport" content="width=device-width, initial-scale=1" />]]></plain>
+    <css>style.css</css>
+  </head>
+  <content>
+    <query collection="imageblog">
+      <condition>
+        <all />
+      </condition>
+      <output inherits="div">
+        <blog inherits="div">
+          <imageEntry>@url</imageEntry>
+        </blog>
+      </output>
+    </query>
+  </content>
+</page>
