@@ -10,8 +10,8 @@
         <all />
       </condition>
       <output inherits="div">
-        <h1>@filename</h1>
-        <rawImage>@file</rawImage>
+        <h1>$filename</h1>
+        <rawImage>$file</rawImage>
       </output>
     </query>
   </content>

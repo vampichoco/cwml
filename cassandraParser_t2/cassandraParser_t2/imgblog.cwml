@@ -11,7 +11,7 @@
       </condition>
       <output inherits="div">
         <blog inherits="div">
-          <imageEntry>@url</imageEntry>
+          <imageEntry>$url</imageEntry>
         </blog>
       </output>
     </query>

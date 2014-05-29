@@ -4,16 +4,18 @@
     <css>style.css</css>
   </head>
   <content>
-    <header />
+    <header>
+      <link goesto="addentry.cwml">Add Entry</link>
+    </header>
     <query collection="blog1">
       <condition>
         <all />
       </condition>
       <output inherits="div">
         <entry inherits="div">
-          <entryTitle inherits="h1">@title</entryTitle>
-          <author inherits="div">@author</author>
-          <entryText inherits="div">@entryText</entryText>
+          <entryTitle inherits="h1">$title</entryTitle>
+          <author inherits="div">$author</author>
+          <entryText inherits="div">$entryText</entryText>
         </entry>
       </output>
       <sort name="dateTime" type="descending" />

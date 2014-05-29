@@ -34,6 +34,75 @@ Public Class CassandraHandler
 
             Dim stdLib As New CWML.StandardParsers(parser) 'Load standard library
             Dim DynamicParser As New DynamicBlockParser(parser) 'Load dynamic block library
+            Dim stdData As New StandardData.StandardDataParser(parser)
+
+            Dim queryvalidator As New CWML.validator With
+                {.tagName = "query",
+                 .validatorHandler = Function(data, ctx)
+                                         Dim checkPresenceOf As Boolean = False
+                                         If data.@presenceOf IsNot Nothing Then
+
+                                             For Each item In data.@presenceOf.Split(" ")
+                                                 If ctx.Variables.ContainsKey(item) Then
+                                                     checkPresenceOf = True
+                                                 Else
+                                                     checkPresenceOf = False
+                                                     Exit For
+                                                 End If
+                                             Next
+                                         Else
+                                             checkPresenceOf = True
+                                         End If
+
+                                         Return checkPresenceOf
+                                     End Function,
+                 .validationFailed = Function(data, ctx) As XElement
+                                         Return <div>Not validated request</div>
+                                     End Function}
+
+            parser.Validators.Add(queryvalidator)
+
+            Dim dataInsertPresenceValidator As New CWML.validator With {
+                .tagName = "dataInsert",
+                .validatorHandler =
+                Function(data, ctx) As Boolean
+                    Dim checkPresenceOf As Boolean = False
+                    If data.@presenceOf IsNot Nothing Then
+
+                        For Each item In data.@presenceOf.Split(" ")
+                            If ctx.Variables.ContainsKey(item) Then
+                                checkPresenceOf = True
+                            Else
+                                checkPresenceOf = False
+                                Exit For
+                            End If
+                        Next
+                    Else
+                        checkPresenceOf = True
+                    End If
+
+                    Return checkPresenceOf
+                End Function,
+                .validationFailed = Function(data, ctx) As XElement
+                                        Return <div>Insufficent data to proccess this tag</div>
+                                    End Function}
+
+            Dim passwordValidator As New CWML.validator With {
+                .tagName = "dataInsert",
+                .validatorHandler =
+                Function(data, ctx) As Boolean
+                    Dim passwordInForm = ctx.Variables("$form/__password")
+                    Dim requiredPassword As String = data.@insertPassword.ToString
+
+                    Return passwordInForm = requiredPassword
+
+                End Function,
+                .validationFailed = Function(data, ctx) As XElement
+                                        Return <div>you have no permission for this!</div>
+                                    End Function}
+
+            parser.Validators.Add(dataInsertPresenceValidator)
+            parser.Validators.Add(passwordValidator)
 
             Dim custom As New CustomParsers(parser) 'Load custom blocks parser
 
@@ -41,15 +110,18 @@ Public Class CassandraHandler
             Dim parseContext As New CWML.ParseContext(context.Request, context.Response)
 
 #If DEBUG Then
-            parseContext.Variables.Add("@system/connectionString", "mongodb://localhost")
+            parseContext.Variables.Add("$system/connectionString", "mongodb://localhost")
 #Else
-            parseContext.Variables.Add("@system/connectionString", "mongodb://localhost")
+            parseContext.Variables.Add("$system/connectionString", "mongodb://localhost")
 #End If
+
+            parseContext.Variables.Add("$system/dbName", "test")
+            
 
             Dim parsed = parser.Parse(xDoc.Elements.First, parseContext)
             context.Response.Write(parsed.ToString)
 
-            parser.Save(parseContext)
+            'parser.Save(parseContext)
 
         End If
 

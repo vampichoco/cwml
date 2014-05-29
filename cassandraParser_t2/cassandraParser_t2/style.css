@@ -15,7 +15,7 @@ body {
 
 h1 {
     font-size: xx-large;
-    color: #CC0033; 
+    color: black; 
     font-family: 'Pontano Sans', sans-serif;
 }
 
@@ -28,8 +28,8 @@ h1 {
 }
 
 .cwml-default-header {
-    background-color: #FFCCCC;
-    color: #000066;
+    background-color: #c5dbf3;
+    color: #000000;
     font-family: 'Pontano Sans', sans-serif;
 }
 

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <import tagName="test karem">
+      <![CDATA[import clr;
+clr.AddReference("System");
+clr.AddReference("System.Xml");
+clr.AddReference("System.Linq");
+clr.AddReference("System.Xml.Linq");
+
+from System import *
+from System.Xml import * 
+from System.Xml.Linq import *
+
+__fname = "test";
+  
+def __plugin_test(_d, _c):
+  p = XElement("p"); 
+  p.SetValue(_d.Value);  
+  return p; 
+  
+def __plugin_karem(_d, _c): 
+  h1 = XElement("h1");
+  h1.SetValue(_d.Value); 
+  return h1;
+ 
+]]>
+    </import>
+  <head>
+    <css>style.css</css>
+  </head>
+  <content>
+    <header />
+    <form action="lambda.cwml" method="post">
+      <textBox id="tb1" />
+      <button id="button1">Submit</button>
+    </form>
+    <test>Hola, mundo!</test>
+    <karem>Te quiero 1</karem>
+    <karem>Te quiero 2</karem>
+    <karem>Te quiero 3</karem>
+    <karem>Te quiero 4</karem>
+    <karem>Te quiero 5</karem>
+    <karem>Te quiero 6</karem>
+    <karem>Te quiero 7</karem>
+    <karem>Te quiero 8</karem>
+    <karem>Te quiero 9</karem>
+    <karem>Te quiero 10</karem>
+    
+  </content>
+</page>

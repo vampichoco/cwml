@@ -11,17 +11,17 @@
       <button id="button_submit">Create image entry</button>
       
     </form>
-  <dataInsert presenceOf="@form/__password @form/imgurl" collection="imageblog" insertPassword="123">
+  <dataInsert presenceOf="$form/__password $form/imgurl" collection="imageblog" insertPassword="123">
     <data>
       <element name="author" value="Eskimo" as="string" />
-      <element name="url" value="@form/imgurl" as="string" />
+      <element name="url" value="$form/imgurl" as="string" />
     </data>
     <ready>
         <div>entry now in DataBase :D</div>
       </ready>
       <error>
         <div>oh noes!</div>
-        <div>@system/error</div>
+        <div>$system/error</div>
       </error>
   </dataInsert>
   </content>

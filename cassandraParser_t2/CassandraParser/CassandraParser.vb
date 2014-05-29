@@ -1,13 +1,31 @@
 ﻿Imports MongoDB.Bson
 Imports MongoDB.Driver
 Imports MongoDB.Driver.Builders
+Imports System.Text.RegularExpressions
+Imports IronPython.Hosting
+Imports Microsoft.Scripting
+Imports Microsoft.Scripting.Hosting
+
+
 Public Class CassandraParser
+
+    Public Const tagPattern = "(<%).*?(%>)"
+    Public Const variablePattern = "\$\w+(\/\w+|\w+)"
+
+    Public Const secureOpeningTag = "\[\w+\]"
+    Public Const secureClosingTag = "\[\/\w+\]"
+
+
+    Private _importedTags As Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
     Private _blockParsers As Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
+    Private _validators As List(Of validator)
 
     Private _useDefaultCss As Boolean
 
     Public Sub New()
         _blockParsers = New Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
+        _importedTags = New Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
+        _validators = New List(Of validator)
     End Sub
 
     ''' <summary>
@@ -19,6 +37,19 @@ Public Class CassandraParser
     Public ReadOnly Property BlockParsers As Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
         Get
             Return _blockParsers
+        End Get
+    End Property
+
+
+    Public ReadOnly Property ImportedTags As Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
+        Get
+            Return _importedTags
+        End Get
+    End Property
+
+    Public ReadOnly Property Validators As List(Of validator)
+        Get
+            Return _validators
         End Get
     End Property
 
@@ -44,43 +75,95 @@ Public Class CassandraParser
             blockName = data.Attributes.SingleOrDefault(Function(a) a.Name = "inherits")
         End If
 
-        If BlockParsers.ContainsKey(blockName) = False Then
+        If BlockParsers.ContainsKey(blockName) = False And ImportedTags.ContainsKey(blockName) = False Then
             Throw New Exception(String.Format("Block parsers has no delegate to proccess {0} tag ", blockName))
         End If
 
-        Dim act = BlockParsers(blockName)
-        ''If data.NodeType = Xml.XmlNodeType.Text Then
-        ''    Return data
-        ''Else
+        Dim tagValidators =
+            From v In Validators Where v.tagName = blockName
 
-        If data.HasElements = False Then
-            If data.Value.StartsWith("@") Then
+        Dim isValidated As Boolean = True
 
-                If context.Variables.ContainsKey(data.Value) = False Then
-                    Throw New Exception(String.Format("Variables dictionary does not contains '{0}' variable", data.Value))
-                End If
+        For Each tagValidator In tagValidators
+            Dim isTagValid As Boolean =
+                tagValidator.validatorHandler.Invoke(data, context)
 
-                Dim varValue As String = context.Variables(data.Value)
-                data.SetValue(varValue)
+            isValidated = isValidated And isTagValid
+
+            If isTagValid = False Then
+                Return tagValidator.validationFailed.Invoke(data, context)
+            End If
+
+        Next
+
+        If isValidated Then
+            If context.Extend.ContainsKey(blockName) Then
+                Dim ext = context.Extend(blockName)
+                ext.Invoke(data)
 
             End If
-        End If
 
-        'If BlockParsers.ContainsKey(data.Name.ToString) Then
-        Try
-            Return act.Invoke(data, context)
-        Catch ex As Exception
-            Return <div class="cwml-system-error">
-                       <strong>Error trying to invoke delegate to parse <%= data.Name %></strong>
-                       <div><%= ex.Message %></div>
-                       <div><%= ex.StackTrace %></div>
-                   </div>
-        End Try
+            Dim act As Func(Of XElement, ParseContext, XElement)
+            ''If data.NodeType = Xml.XmlNodeType.Text Then
+            ''    Return data
+            ''Else
+
+            If data.HasElements = False Then
+
+                If Regex.IsMatch(data.Value, variablePattern) Then
+
+                    If context.Variables.ContainsKey(data.Value) = False Then
+                        Throw New Exception(String.Format("Variables dictionary does not contains '{0}' variable", data.Value))
+                    End If
+
+                    Dim varValue As String = context.Variables(data.Value)
+                    data.SetValue(varValue)
+
+                End If
+            End If
+
+            'If BlockParsers.ContainsKey(data.Name.ToString) Then
+            Try
+                If ImportedTags.ContainsKey(blockName) Then
+
+
+
+                    Dim plugInMembers As New Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
+
+
+                    Dim plugin As Func(Of XElement, ParseContext, XElement) =
+                        ImportedTags(blockName)
+
+                    act = plugin
+                    Return act.Invoke(data, context)
+
+                Else
+                    act = BlockParsers(blockName)
+                    Return act.Invoke(data, context)
+                End If
+            Catch ex As Exception
+                Return <div class="cwml-system-error">
+                           <strong>Error trying to invoke delegate to parse <%= data.Name %></strong>
+                           <div><%= ex.Message %></div>
+                           <div><%= ex.StackTrace %></div>
+                       </div>
+            End Try
+        End If
 
         'Else
         'Return data
         'End If
         'End If
+
+    End Function
+
+    Public Iterator Function getTags(ByVal input As String) As IEnumerable(Of String)
+
+        Dim regex As New Regex(tagPattern)
+
+        For Each item As Match In regex.Matches(input)
+            Yield item.Value.Remove(0, 1).Remove(item.Value.Count, item.Value.Count - 1)
+        Next
 
     End Function
 
@@ -93,53 +176,6 @@ Public Class CassandraParser
 
     End Sub
 
-    Public Function ParseQueryCondition(ByVal input As XElement, context As ParseContext) As IMongoQuery
-        Select Case input.Name.ToString
-            Case "and"
-                Dim qNodes = ParseNodes(input, context)
-
-                Return Query.And(qNodes(0), qNodes(1))
-
-            Case "or"
-
-                Dim qNodes = ParseNodes(input, context)
-
-                Return Query.Or(qNodes(0), qNodes(1))
-
-            Case "equals"
-                Dim name As String = input.@name
-                Dim value As String = input.@value
-
-                If name.StartsWith("@") Then : name = context.Variables(name)
-                End If
-
-                If value.StartsWith("@") Then : value = context.Variables(value)
-                End If
-
-                Return Query.EQ(name, value)
-
-
-            Case Else
-                If input.Name = "all" = False Then
-                    Throw New Exception("No valid operation")
-                End If
-                Return Nothing
-        End Select
-    End Function
-
-    Public Function ParseNodes(ByVal node As XElement, context As ParseContext) As IMongoQuery()
-        Dim nodes = node.Nodes.ToArray
-
-        If nodes.Length < 2 Then
-            Throw New Exception("Or Operator requres two values to be compared")
-        End If
-
-        Dim nodeA As IMongoQuery = ParseQueryCondition(nodes(0), context)
-        Dim nodeB As IMongoQuery = ParseQueryCondition(nodes(1), context)
-
-        Return {nodeA, nodeB}
-
-    End Function
 
     Public Function SetDefaultCss(ByVal original As XElement, target As XElement) As XElement
         If UseDefaultCss Then
@@ -155,5 +191,29 @@ Public Class CassandraParser
         target.SetAttributeValue("class", element)
         Return target
     End Function
+
+    Public Structure ImportTag
+        Private _name As String
+        Private _code As String
+
+        Public Property Name As String
+            Get
+                Return _name
+            End Get
+            Set(value As String)
+                _name = value
+            End Set
+        End Property
+
+        Public Property Code As String
+            Get
+                Return _code
+            End Get
+            Set(value As String)
+                _code = value
+            End Set
+        End Property
+
+    End Structure
 
 End Class

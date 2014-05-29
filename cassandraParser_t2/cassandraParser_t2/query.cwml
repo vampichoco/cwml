@@ -1,4 +1,3 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
 <page>
   <head>
     <css>style.css</css>
@@ -10,17 +9,17 @@
       <button id="submit">Search</button>
     </form>
     <link goesto="datainsert.cwml">Insert data</link>
-    <query collection="cassandra" presenceOf="@form/location">
-      <condition>
-        <equals name="location" value="@form/location" />
-      </condition>
+    <query collection="cassandra" presenceOf="$form/location">
       <sort name="name" type="ascending" />
       <output inherits="div">
         <person>
-          <Name>@name</Name>
-          <Location>@location</Location>
+          <Name>$name</Name>
+          <Location>$location</Location>
         </person>
       </output>
+      <condition>
+        <equals name="location" value="$form/location" />
+      </condition>
     </query>
   </content>
 </page>

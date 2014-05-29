@@ -4,12 +4,12 @@
     <css>style.css</css>
   </head>
   <content>
-    <query collection="files" presenceOf="@queryString/f">
+    <query collection="files" presenceOf="$queryString/f">
       <condition>
-        <equals name="filename" value="@queryString/f" />
+        <equals name="filename" value="$queryString/f" />
       </condition>
       <output inherits="div">
-        <rawImage>@file</rawImage>
+        <rawImage>$file</rawImage>
       </output>
     </query>
   </content>

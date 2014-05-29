@@ -1,46 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
 <page>
-
   <head>
     <!-- <title>Hello to my Elle Fanning Site</title> -->
     <css>style.css</css>
   </head>
-
   <content>
     <header>
       <link goesto="files.cwml">Images</link>
       <link goesto="blog.cwml">Blog</link>
     </header>
-
     <h1>Welcome to the home of CWML</h1>
-
-    <text>
-      This web site is developed using CWML.
-      CWML is Cassandra/Custom Web Markup Language wich is used to simplify creation of web pages, in this page, a simple XML file is compiled into HTML
-      As CWML is extensible, i can add one tag called Elle and then the compiler will create the required HTML to show the biography of Elle
-    </text>
-
-    
-
+    <text><![CDATA[<div> 
+      [% <elle /> %] <br />  [% <link goesto="bio.cwml">Biography</link> %]</div>]]></text>
     <p>
-      <link goesto="dynamic.cwml">In cwml now you can use dynamic blocks</link>
+      <link goesto="dynamic.cwml">In cwml now you can use dynamic blocks, this page was made with Visual Cassandra</link>
     </p>
-
     <p>
       <link goesto="https://github.com/vampichoco/cwml/blob/master/cassandraParser_t2/cassandraParser_t2/index.cwml">
         Check the file that generates this page
       </link>
-
       <br />
-
       <link goesto="https://github.com/vampichoco/cwml">
         Check the source of this project
       </link>
-
-
     </p>
-
+    <link goesto="http://eskipublic.s3.amazonaws.com/112.jpg">
+      <image>http://eskipublic.s3.amazonaws.com/112.jpg</image>
+    </link>
   </content>
-
-
 </page>

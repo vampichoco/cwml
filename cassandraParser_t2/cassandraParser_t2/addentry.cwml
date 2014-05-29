@@ -20,19 +20,22 @@
         <button id="submit">Add entry!</button>
       </div>
     </form>
-    <dataInsert collection="blog1" presenceOf="@form/__password @form/entryTitle @form/entryText" insertPassword="l3ila">
+    <dataInsert collection="blog1" presenceOf="$form/__password $form/entryTitle $form/entryText" insertPassword="123">
       <data>
         <element name="author" value="Eskimo" as="string" />
-        <element name="title" value="@form/entryTitle" as="string" />
-        <element name="entryText" value="@form/entryText" as="string" />
-        <element name="dateTime" value="@system/dateTime" as="string" />
+        <element name="title" value="$form/entryTitle" as="string" />
+        <element name="entryText" value="$form/entryText" as="string" />
+        <element name="dateTime" value="$system/dateTime" as="string" />
       </data>
       <ready>
         <div>entry now in DataBase :D</div>
+        <div>
+          <link goesto="blog.cwml">View entry in blog</link>
+        </div>
       </ready>
       <error>
         <div>oh noes!</div>
-        <div>@system/error</div>
+        <div>$system/error</div>
       </error>
     </dataInsert>
   </content>

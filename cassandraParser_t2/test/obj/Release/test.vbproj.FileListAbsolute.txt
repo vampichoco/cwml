@@ -1,0 +1,17 @@
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\test.exe.config
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\test.exe
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\test.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\test.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\cassandrafs.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\MongoDB.Bson.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\MongoDB.Driver.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\cassandrafs.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\cassandrafs.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\MongoDB.Bson.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\bin\Release\MongoDB.Driver.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\obj\Release\test.vbprojResolveAssemblyReference.cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\obj\Release\test.Resources.resources
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\obj\Release\test.vbproj.GenerateResource.Cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\obj\Release\test.exe
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\obj\Release\test.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\test\obj\Release\test.pdb

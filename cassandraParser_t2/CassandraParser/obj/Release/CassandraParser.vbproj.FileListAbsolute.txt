@@ -10,3 +10,32 @@ C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Rel
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.dll
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.xml
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\CassandraParser.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\CassandraParser.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\CassandraParser.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\MongoDB.Bson.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\MongoDB.Driver.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\MongoDB.Bson.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\MongoDB.Driver.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.vbprojResolveAssemblyReference.cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\obj\Release\CWML.Resources.resources
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.vbproj.GenerateResource.Cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\obj\Release\CassandraParser.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\IronPython.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\IronPython.Modules.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\IronPython.SQLite.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\IronPython.Wpf.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\Microsoft.Dynamic.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\Microsoft.Scripting.AspNet.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\Microsoft.Scripting.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\Microsoft.Scripting.Metadata.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\IronPython.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\IronPython.Modules.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\IronPython.SQLite.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\IronPython.Wpf.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\Microsoft.Dynamic.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\Microsoft.Scripting.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\Microsoft.Scripting.AspNet.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\CassandraParser\bin\Release\Microsoft.Scripting.Metadata.xml

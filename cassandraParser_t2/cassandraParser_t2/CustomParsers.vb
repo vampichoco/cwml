@@ -1,5 +1,8 @@
 ﻿
 Imports CWML
+Imports IronPython.Hosting
+Imports Microsoft.Scripting
+Imports Microsoft.Scripting.Hosting
 
 
 ''' <summary>
@@ -29,14 +32,15 @@ Public Class CustomParsers
             .Add("elle", AddressOf ParseElle)
             .Add("bitly", AddressOf parseBitly)
             .Add("camera", AddressOf parseCamera)
-            .Add("person", AddressOf ParsePerson)
-            .Add("Name", AddressOf ParseName)
-            .Add("Location", AddressOf ParseLocation)
+            '.Add("person", AddressOf ParsePerson)
+            '.Add("Name", AddressOf ParseName)
+            '.Add("Location", AddressOf ParseLocation)
             .Add("entryInput", AddressOf parseEntryInput)
             .Add("rawImage", AddressOf parseRawImage)
             .Add("coffeeLib", AddressOf ParseCoffeeLib)
             .Add("coffee", AddressOf ParseCoffee)
             .Add("imageEntry", AddressOf ParseImageEntry)
+            .Add("import", AddressOf Import)
 
         End With
 
@@ -118,9 +122,10 @@ Public Class CustomParsers
 
     Public Function ParsePerson(ByVal data As XElement, context As ParseContext) As XElement
 
-        Dim container = <div>
-                            <%= From item In data.Elements Select CassandraParser.Parse(item, context) %>
-                        </div>
+        Dim container = New XElement("div")
+
+        container.Add(New XElement("h1"))
+
 
 
         Return container
@@ -191,6 +196,36 @@ Public Class CustomParsers
     Public Function ParseCoffeeLib(ByVal data As XElement, context As ParseContext) As XElement
         Dim result = <script type="text/javascript" src="coffee-script.js"></script>
         Return result
+    End Function
+
+    Public Function Import(ByVal data As XElement, context As ParseContext) As XElement
+        Dim stopWatch As New System.Diagnostics.Stopwatch
+        stopWatch.Start()
+
+        Dim Script As String = data.Value
+        Dim engine = Python.CreateEngine
+        Dim source = engine.CreateScriptSourceFromString(Script, SourceCodeKind.Statements)
+
+        Dim compiled = source.Compile
+
+        Dim scope = engine.CreateScope
+
+        Dim result = compiled.Execute(scope)
+
+        Dim tagnames As String() = data.Attribute("tagName").Value.Split(" ")
+
+        For Each item In tagnames
+            Dim plugin = scope.GetVariable(Of Func(Of XElement, ParseContext, XElement))("__plugin_" & item)
+            CassandraParser.ImportedTags.Add(item, plugin)
+        Next
+
+        stopWatch.Stop()
+        context.Response.Write("Elapsed: " & stopWatch.Elapsed.TotalMilliseconds)
+
+        Return Nothing
+
+
+
     End Function
 
 

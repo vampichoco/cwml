@@ -1,0 +1,9 @@
+<page>
+  <head>
+    <css>style.css</css>
+  </head>
+  <content>
+    <header />
+    <link goesto="index.cwml" />
+  </content>
+</page>

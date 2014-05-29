@@ -2,6 +2,7 @@
 Imports MongoDB.Bson
 Imports MongoDB.Driver
 Imports MongoDB.Driver.Builders
+Imports System.Text.RegularExpressions
 
 ''' <summary>
 ''' Provides basic parsing functions from CWML to HTML
@@ -51,8 +52,6 @@ Public Class StandardParsers
             .Add("form", AddressOf ParseForm)
             .Add("textBox", AddressOf ParseTextBox)
             .Add("button", AddressOf ParseButton)
-            .Add("query", AddressOf ParseQuery)
-            .Add("dataInsert", AddressOf ParseDataInsert)
             .Add("ready", AddressOf ParseReady)
             .Add("error", AddressOf ParseError)
             .Add("upload", AddressOf parseFileUpload)
@@ -190,14 +189,27 @@ Public Class StandardParsers
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function ParseText(ByVal data As XElement, context As ParseContext) As XElement
-        Dim lines = data.Value.Split(vbLf)
-        Dim result = <p <%= From item In data.Attributes Select item %>>
-                         <div>
-                             <%= From item In lines Select CassandraParser.SetDefaultCss(data, (New XElement("div", item))) %>
-                         </div>
-                     </p>
+        Dim val As String = data.Value
+        Dim pattern As String = "(\[%).*?(%\])"
 
-        Return result
+        Dim htmlop As String = Regex.Replace(val, pattern,
+                                             Function(m As Match) As String
+                                                 Dim ip = m.Value.Replace("[%", "").Replace("%]", "")
+                                                 Dim html = CassandraParser.Parse(XElement.Parse(ip), context).ToString
+
+
+                                                 Return _ret(html)
+
+                                             End Function)
+
+        Return XElement.Parse(htmlop)
+
+
+    End Function
+
+
+    Function _ret(ByVal input As String) As String
+        Return input
     End Function
 
     Public Function ParseDiv(ByVal data As XElement, context As ParseContext) As XElement
@@ -261,230 +273,8 @@ Public Class StandardParsers
         Return Nothing
     End Function
 
-    Public Function ParseQuery(ByVal data As XElement, context As ParseContext) As XElement
 
-        Dim connectionString = context.Variables("@system/connectionString")
-
-        Dim checkPresenceOf As Boolean = False
-        Dim sortedquery As Boolean = False
-
-        If data.@presenceOf IsNot Nothing Then
-
-            For Each item In data.@presenceOf.Split(" ")
-                If context.Variables.ContainsKey(item) Then
-                    checkPresenceOf = True
-                Else
-                    checkPresenceOf = False
-                    Exit For
-                End If
-            Next
-        Else
-            checkPresenceOf = True
-        End If
-
-
-        If checkPresenceOf = True Then
-            Dim collectionName As String = data.@collection
-
-            Dim client = New MongoClient(connectionString)
-
-            Dim server = client.GetServer
-            Dim dataBase = server.GetDatabase("test")
-
-            Dim collection = dataBase.GetCollection(collectionName)
-
-            Dim condition = data.<condition>.Elements.First
-
-            Dim sort = Nothing
-            If data.Elements.SingleOrDefault(Function(e) e.Name = "sort") IsNot Nothing Then
-                sortedquery = True
-                Dim sortData = data.Elements.SingleOrDefault(Function(e) e.Name = "sort")
-                Dim attrName = sortData.@name
-                Dim sortType = sortData.@type
-
-                Select Case sortType
-                    Case "ascending"
-                        sort = SortBy.Ascending(attrName.Split(","))
-                    Case "descending"
-                        sort = SortBy.Descending(attrName.Split(","))
-                    Case Else
-                        sort = SortBy.Null
-                End Select
-
-            End If
-
-            Dim queryExpression = CassandraParser.ParseQueryCondition(condition, context)
-
-            Dim _query As MongoCursor(Of BsonDocument)
-
-            If condition.Name = "all" Then
-                If sortedquery Then
-                    _query = collection.FindAll().SetSortOrder(sort)
-                Else
-                    _query = collection.FindAll()
-                End If
-
-            Else
-                If sortedquery Then
-                    _query = collection.Find(queryExpression).SetSortOrder(sort)
-                Else
-                    _query = collection.Find(queryExpression)
-                End If
-
-
-            End If
-
-            Dim queryop = <div></div>
-
-            Dim opPattern = data.Element("output")
-
-            For Each item In _query
-                Dim op As New XElement(opPattern)
-                Dim ctx As New CWML.ParseContext(context.Request, context.Response)
-
-                For Each attr In item.Names
-                    Dim element = item(attr)
-                    Select Case element.BsonType
-                        Case BsonType.Binary
-                            ctx.Variables.Add("@" & attr, Convert.ToBase64String(element.AsBsonBinaryData.Bytes))
-                        Case Else
-                            ctx.Variables.Add("@" & attr, item(attr).ToString)
-                    End Select
-
-                Next
-
-
-                queryop.Add(_cassandra.Parse(op, ctx))
-
-            Next
-
-            Return queryop
-
-
-        Else
-            Return <div></div>
-        End If
-
-
-
-    End Function
-    Public Function ParseDataInsert(ByVal data As XElement, context As ParseContext) As XElement
-        Dim connectionString = context.Variables("@system/connectionString")
-
-        Dim checkPresenceOf As Boolean = False
-
-        If data.@presenceOf IsNot Nothing Then
-
-            For Each item In data.@presenceOf.Split(" ")
-                If context.Variables.ContainsKey(item) Then
-                    checkPresenceOf = True
-                Else
-                    checkPresenceOf = False
-                    Exit For
-                End If
-            Next
-        End If
-
-        If context.Request.Form("__password") Is Nothing Then
-            checkPresenceOf = False
-        Else
-            Dim passInForm As String = context.Request.Form("__password")
-            Dim pass = data.@insertPassword
-
-            If (passInForm = pass) = False Then
-                checkPresenceOf = False
-            End If
-        End If
-
-        If checkPresenceOf Then
-
-            Try
-                Dim collectionName As String = data.@collection
-
-                Dim client = New MongoClient(connectionString)
-
-                Dim server = client.GetServer
-                Dim dataBase = server.GetDatabase("test")
-
-                Dim collection = dataBase.GetCollection(collectionName)
-                Dim document As New BsonDocument
-
-                For Each item In data.<data>...<element>
-
-                    Dim value = parseDataElement(item, context)
-
-                    document.Add(value)
-                Next
-
-                collection.Insert(document)
-
-                Return CassandraParser.Parse(data.Element("ready"), context)
-
-            Catch ex As Exception
-                context.Variables.Add("@system/error", ex.Message)
-                context.Variables.Add("@system/error/stackTrace", ex.StackTrace)
-
-                Return CassandraParser.Parse(data.Element("error"), context)
-            End Try
-        Else
-            context.Variables.Add("@system/error", "No error")
-            Return <div/>
-        End If
-
-
-    End Function
-
-    Public Function ParseDataType(ByVal strType As String) As BsonType
-        Select Case strType
-            Case "string"
-                Return BsonType.String
-            Case "int"
-                Return BsonType.Int32
-            Case "bigint"
-                Return BsonType.Int64
-            Case "dateTime"
-                Return BsonType.DateTime
-            Case "binary"
-                Return BsonType.Binary
-            Case Else
-                Return BsonType.String
-        End Select
-    End Function
-
-    Public Function parseDataElement(ByVal data As XElement, ByVal context As ParseContext) As BsonElement
-        Dim type = ParseDataType(data.@as)
-        Dim name = data.@name
-        Dim value = data.@value
-
-        
-
-        If value.StartsWith("@") Then
-
-            If context.Variables.ContainsKey(value) = False Then
-                Throw New Exception(String.Format("Variable '{0}' not found in variable dictionary", value))
-            End If
-
-            value = context.Variables(value)
-
-        End If
-
-
-        Select Case type
-            Case BsonType.String
-                Return New BsonElement(name, New BsonString(value))
-            Case BsonType.Int32
-                Return New BsonElement(name, New BsonInt32(Integer.Parse(value)))
-            Case BsonType.Int64
-                Return New BsonElement(name, New BsonInt64(Int64.Parse(value)))
-            Case BsonType.DateTime
-                Return New BsonElement(name, New BsonDateTime(Date.Parse(value)))
-            Case BsonType.Binary
-                Dim val As New BsonBinaryData(Convert.FromBase64String(value))
-                Return New BsonElement(name, val)
-            Case Else
-                Return New BsonElement(name, New BsonString(value))
-        End Select
-    End Function
+    
 
     Public Function ParseReady(data As XElement, context As ParseContext) As XElement
         Dim result = <div>

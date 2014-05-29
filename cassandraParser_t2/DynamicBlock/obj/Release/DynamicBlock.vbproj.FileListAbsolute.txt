@@ -20,3 +20,25 @@ C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\DynamicBlock\bin\Releas
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\DynamicBlock\obj\Release\DynamicBlock.dll
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\DynamicBlock\obj\Release\DynamicBlock.xml
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\DynamicBlock\obj\Release\DynamicBlock.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\DynamicBlock.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\DynamicBlock.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\DynamicBlock.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\CassandraParser.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\MongoDB.Bson.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\MongoDB.Driver.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\Microsoft.Scripting.Metadata.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\CassandraParser.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\CassandraParser.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\IronPython.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\Microsoft.Dynamic.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\Microsoft.Scripting.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\Microsoft.Scripting.AspNet.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\MongoDB.Bson.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\MongoDB.Driver.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\bin\Release\Microsoft.Scripting.Metadata.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\obj\Release\DynamicBlock.vbprojResolveAssemblyReference.cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\obj\Release\CWML.Resources.resources
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\obj\Release\DynamicBlock.vbproj.GenerateResource.Cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\obj\Release\DynamicBlock.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\obj\Release\DynamicBlock.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\DynamicBlock\obj\Release\DynamicBlock.pdb

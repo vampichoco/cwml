@@ -1,0 +1,14 @@
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\bin\cassandrafs.dll.config
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\bin\cassandrafs.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\bin\cassandrafs.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\bin\cassandrafs.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\bin\MongoDB.Bson.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\bin\MongoDB.Driver.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\bin\MongoDB.Bson.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\bin\MongoDB.Driver.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\obj\Release\cassandrafs.vbprojResolveAssemblyReference.cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\obj\Release\cassandrafs.Resources.resources
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\obj\Release\cassandrafs.vbproj.GenerateResource.Cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\obj\Release\cassandrafs.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\obj\Release\cassandrafs.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandrafs\obj\Release\cassandrafs.pdb

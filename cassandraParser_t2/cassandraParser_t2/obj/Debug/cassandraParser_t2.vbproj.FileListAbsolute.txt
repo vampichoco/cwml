@@ -71,3 +71,42 @@ C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\MongoDB.Bson.dll
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\MongoDB.Driver.xml
 C:\Users\Eskimo\Documents\GitHub\cwml\cassandraParser_t2\cassandraParser_t2\bin\MongoDB.Bson.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\cassandraParser_t2.dll.config
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\cassandraParser_t2.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\cassandraParser_t2.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\cassandraParser_t2.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\CassandraParser.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\DynamicBlock.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.Metadata.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\CassandraParser.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\CassandraParser.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\DynamicBlock.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\DynamicBlock.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Dynamic.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.AspNet.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.Metadata.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.vbprojResolveAssemblyReference.cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.Resources.resources
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.vbproj.GenerateResource.Cache
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\obj\Debug\cassandraParser_t2.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.Modules.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.SQLite.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.Wpf.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Dynamic.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.AspNet.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\Microsoft.Scripting.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.Modules.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.SQLite.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.Wpf.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\StandardData.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\MongoDB.Driver.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\MongoDB.Bson.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\StandardData.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\StandardData.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\MongoDB.Driver.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\MongoDB.Bson.xml
