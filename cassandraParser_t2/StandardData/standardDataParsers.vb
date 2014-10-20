@@ -46,7 +46,6 @@ Public Class StandardDataParser
 
                 Return Query.EQ(name, value)
 
-
             Case Else
                 If input.Name = "all" = False Then
                     Throw New Exception("No valid operation")
@@ -129,9 +128,6 @@ Public Class StandardDataParser
 
         Dim sortedquery As Boolean = False
 
-       
-
-
         Dim collectionName As String = data.@collection
 
         Dim client = New MongoClient(connectionString)
@@ -190,13 +186,19 @@ Public Class StandardDataParser
             Dim op As New XElement(opPattern)
             Dim ctx As New CWML.ParseContext(context.Request, context.Response)
 
-            For Each attr In item.Names
+            Dim asdas = ctx.fileName
+
+            Dim names = item.Names
+
+
+            For Each attr In names
+                Dim attrName As String = attr
                 Dim element = item(attr)
                 Select Case element.BsonType
                     Case BsonType.Binary
-                        ctx.Variables.Add("$" & attr, Convert.ToBase64String(element.AsBsonBinaryData.Bytes))
+                        ctx.Variables.Add("$query/" & attr, Convert.ToBase64String(element.AsBsonBinaryData.Bytes))
                     Case Else
-                        ctx.Variables.Add("$" & attr, item(attr).ToString)
+                        ctx.Variables.Add("$query/" & attr, item(attr).ToString)
                 End Select
 
             Next
@@ -216,22 +218,7 @@ Public Class StandardDataParser
         Dim connectionString = context.Variables("$system/connectionString")
         Dim dbName As String = context.Variables("$system/dbName")
 
-        Dim checkPresenceOf As Boolean = False
-
-        If data.@presenceOf IsNot Nothing Then
-
-            For Each item In data.@presenceOf.Split(" ")
-                If context.Variables.ContainsKey(item) Then
-                    checkPresenceOf = True
-                Else
-                    checkPresenceOf = False
-                    Exit For
-                End If
-            Next
-        End If
-
-
-        If checkPresenceOf Then
+       
 
             Try
                 Dim collectionName As String = data.@collection
@@ -261,10 +248,7 @@ Public Class StandardDataParser
 
                 Return CassandraParser.Parse(data.Element("error"), context)
             End Try
-        Else
-            context.Variables.Add("$system/error", "No error")
-            Return <div/>
-        End If
+       
 
 
     End Function

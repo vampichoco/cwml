@@ -1,9 +1,12 @@
 <page>
   <head>
     <!-- <title>Hello to my Elle Fanning Site</title> -->
-    <css>style.css</css>
+    <!--<css>style.css</css>-->
   </head>
   <content>
+    <topBar>
+      <div>hello, World!</div>
+    </topBar>
     <header>
       <link goesto="files.cwml">Images</link>
       <link goesto="blog.cwml">Blog</link>

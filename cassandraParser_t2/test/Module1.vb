@@ -1,17 +1,17 @@
 ﻿Module Module1
 
     Sub Main()
-        Dim manager As New cassandrafs.fileManager("mongodb://localhost", "Eskimo")
+        Dim manager As New cassandrafs.fileManager("mongodb://localhost", Guid.Empty)
 
         Dim ip = Console.ReadLine
         Select Case ip
             Case "createDir"
                 Dim dir As New cassandrafs.directory With
-            {.directory = "{null}",
-             .id = Guid.NewGuid.ToString(),
-             .IndexKey = "Eskimo",
+            {.directory = Guid.Empty,
+             .id = Guid.NewGuid(),
+             .indexKey = Guid.Empty,
              .name = "Home directory",
-             .Type = cassandrafs.objectItem.ObjectType.Directory}
+             .type = cassandrafs.objectItem.ObjectType.Directory}
 
                 manager.AddDirectory(dir)
 
@@ -20,7 +20,7 @@
                 Console.ReadLine()
             Case "getDir"
 
-                Dim dirId As String = "99866ba4-48c0-4422-add7-cf80c00f8352"
+                Dim dirId As Guid = Guid.Parse("99866ba4-48c0-4422-add7-cf80c00f8352")
 
                 Dim dir = manager.GetDirectory(dirId)
 
@@ -42,18 +42,18 @@
                 Console.ReadLine()
 
             Case "addLink"
-                Dim dirId As String = "99866ba4-48c0-4422-add7-cf80c00f8352"
+                Dim dirId As Guid = Guid.Parse("99866ba4-48c0-4422-add7-cf80c00f8352")
 
                 Dim dir = manager.GetDirectory(dirId)
 
                 Dim file As New cassandrafs.linkItem With
                     {.LinkText = "http://eskipublic.s3.amazonaws.com/uff.jpg",
                      .directory = dirId,
-                     .id = Guid.NewGuid.ToString,
-                     .indexKey = "Eskimo",
+                     .id = Guid.NewGuid,
+                     .indexKey = Guid.Empty,
                      .name = "uff.jpg",
                      .type = cassandrafs.objectItem.ObjectType.HyperLink,
-                     .permission = cassandrafs.objectItem.DefaultPermission.ToList
+                     .permission = cassandrafs.objectItem.DefaultPermission(.indexKey).ToList
                     }
 
                 manager.AddFile(file)
@@ -63,7 +63,7 @@
 
             Case "addFile"
 
-                Dim dirId As String = "99866ba4-48c0-4422-add7-cf80c00f8352"
+                Dim dirId As Guid = Guid.Parse("99866ba4-48c0-4422-add7-cf80c00f8352")
 
                 Dim dir = manager.GetDirectory(dirId)
 
@@ -72,12 +72,12 @@
 
                 Dim file As New cassandrafs.fileItem With
                     {.directory = dirId,
-                     .id = Guid.NewGuid.ToString,
-                     .indexKey = "Eskimo",
+                     .id = Guid.NewGuid,
+                     .indexKey = Guid.Empty,
                      .name = "Chisaki",
                      .type = cassandrafs.objectItem.ObjectType.File,
                      .data = manager.GetStream(fstream),
-                     .permission = cassandrafs.objectItem.DefaultPermission.ToList
+                     .permission = cassandrafs.objectItem.DefaultPermission(.indexKey).ToList
                     }
 
                 fstream.Close()

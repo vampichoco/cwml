@@ -213,6 +213,39 @@ Public Class CustomParsers
         Dim result = compiled.Execute(scope)
 
         Dim tagnames As String() = data.Attribute("tagName").Value.Split(" ")
+        Dim validators As String()
+
+        If data.Attribute("customValidators") IsNot Nothing Then
+            validators = data.Attribute("customValidators").Value.Split(" ")
+
+            For Each v In validators
+                Dim varName As String = "__validator_" & v
+                Dim failedValidName As String = "__validation_failed" & v
+
+                Dim cassandraValidator As New validator With {.tagName = v}
+
+                If scope.ContainsVariable(varName) Then
+                    Dim validator As Func(Of XElement, ParseContext, Boolean) =
+                        scope.GetVariable(Of Func(Of XElement, ParseChildrenAttribute, Boolean))(varName)
+
+                    cassandraValidator.validatorHandler =
+                        validator
+
+                End If
+
+                If scope.ContainsVariable(failedValidName) Then
+                    Dim failureHandler As Func(Of XElement, ParseContext, XElement) =
+                        scope.GetVariable(Of Func(Of XElement, ParseContext, XElement))(failedValidName)
+
+                    cassandraValidator.validationFailed = failureHandler
+                End If
+
+                CassandraParser.Validators.Add(cassandraValidator)
+
+            Next
+
+        End If
+
 
         For Each item In tagnames
             Dim plugin = scope.GetVariable(Of Func(Of XElement, ParseContext, XElement))("__plugin_" & item)

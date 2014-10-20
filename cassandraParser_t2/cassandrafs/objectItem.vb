@@ -1,9 +1,9 @@
 ﻿Public Class objectItem
     Private _name As String
-    Private _directory As String
+    Private _directory As Guid
     Private _type As Integer
-    Private _indexKey As String
-    Private _id As String
+    Private _indexKey As Guid
+    Private _id As Guid
     Private _permission As List(Of permissionObject)
 
     Public Enum PermissionType
@@ -18,13 +18,14 @@
         File = 0
         HyperLink = 1
         Directory = 2
+        Code = 3
     End Enum
 
-    Public Property id As String
+    Public Property id As Guid
         Get
             Return _id
         End Get
-        Set(value As String)
+        Set(value As Guid)
             _id = value
         End Set
     End Property
@@ -38,11 +39,11 @@
         End Set
     End Property
 
-    Public Property directory As String
+    Public Property directory As Guid
         Get
             Return _directory
         End Get
-        Set(value As String)
+        Set(value As Guid)
             _directory = value
         End Set
     End Property
@@ -57,11 +58,11 @@
     End Property
 
 
-    Public Property indexKey As String
+    Public Property indexKey As Guid
         Get
             Return _indexKey
         End Get
-        Set(value As String)
+        Set(value As Guid)
             _indexKey = value
         End Set
     End Property
@@ -75,8 +76,8 @@
         End Set
     End Property
 
-    Shared Iterator Function DefaultPermission() As IEnumerable(Of permissionObject)
-        Yield New permissionObject With {.permission = permissionObject.PermissionType.Full, .user = "$owner"}
+    Shared Iterator Function DefaultPermission(ByVal userId As Guid) As IEnumerable(Of permissionObject)
+        Yield New permissionObject With {.permission = permissionObject.PermissionType.Full, .user = userId}
     End Function
 
 

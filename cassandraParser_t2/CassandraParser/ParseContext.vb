@@ -42,6 +42,34 @@
 
     End Sub
 
+    Public Sub New()
+        _extend = New Dictionary(Of String, Action(Of XElement))
+
+        If Request.Form IsNot Nothing Then
+            For Each item In Request.Form.Keys
+                _variables.Add("$form/" & item, Request.Form(item))
+            Next
+        End If
+
+        For Each item In Request.QueryString
+            _variables.Add("$queryString/" & item, Request.QueryString(item))
+        Next
+
+
+        For Each item In Request.Files.Keys
+            Dim file As System.Web.HttpPostedFile = Request.Files.Item(item)
+            Dim ms As New IO.MemoryStream
+            file.InputStream.CopyTo(ms)
+            _variables.Add("$files/" & item, Convert.ToBase64String(ms.ToArray))
+            ms.Close()
+
+        Next
+
+        'Add system variables 
+
+        _variables.Add("$system/dateTime", DateTime.Now.ToString)
+    End Sub
+
     Public Property Request As Web.HttpRequest
         Get
             Return _request

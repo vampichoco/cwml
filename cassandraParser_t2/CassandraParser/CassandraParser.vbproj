@@ -10,7 +10,8 @@
     <AssemblyName>CassandraParser</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,29 +44,37 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IronPython">
-      <HintPath>..\packages\IronPython.2.7.4\lib\Net45\IronPython.dll</HintPath>
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\cassandra\packages\IronPython.2.7.4\lib\Net40\IronPython.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython.Modules">
-      <HintPath>..\packages\IronPython.2.7.4\lib\Net45\IronPython.Modules.dll</HintPath>
+    <Reference Include="IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\cassandra\packages\IronPython.2.7.4\lib\Net40\IronPython.Modules.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython.SQLite">
-      <HintPath>..\packages\IronPython.2.7.4\lib\Net45\IronPython.SQLite.dll</HintPath>
+    <Reference Include="IronPython.SQLite, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\cassandra\packages\IronPython.2.7.4\lib\Net40\IronPython.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython.Wpf">
-      <HintPath>..\packages\IronPython.2.7.4\lib\Net45\IronPython.Wpf.dll</HintPath>
+    <Reference Include="IronPython.Wpf, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\cassandra\packages\IronPython.2.7.4\lib\Net40\IronPython.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamic">
-      <HintPath>..\packages\IronPython.2.7.4\lib\Net45\Microsoft.Dynamic.dll</HintPath>
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\cassandra\packages\IronPython.2.7.4\lib\Net40\Microsoft.Dynamic.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting">
-      <HintPath>..\packages\IronPython.2.7.4\lib\Net45\Microsoft.Scripting.dll</HintPath>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\cassandra\packages\IronPython.2.7.4\lib\Net40\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting.AspNet">
-      <HintPath>..\packages\IronPython.2.7.4\lib\Net45\Microsoft.Scripting.AspNet.dll</HintPath>
+    <Reference Include="Microsoft.Scripting.AspNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\cassandra\packages\IronPython.2.7.4\lib\Net40\Microsoft.Scripting.AspNet.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting.Metadata">
-      <HintPath>..\packages\IronPython.2.7.4\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\cassandra\packages\IronPython.2.7.4\lib\Net40\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Bson">
       <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
@@ -111,6 +120,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ParseContext.vb" />
+    <Compile Include="scopeItem.vb" />
     <Compile Include="StandardParsers.vb" />
     <Compile Include="validator.vb" />
   </ItemGroup>

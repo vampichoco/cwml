@@ -39,6 +39,7 @@ Public Class StandardParsers
 
         With CassandraParser.BlockParsers
             .Add("page", AddressOf ParsePage)
+            .Add("topBar", AddressOf ParseTopBar)
             .Add("head", AddressOf ParseHead)
             .Add("content", AddressOf ParseBody)
             .Add("link", AddressOf ParseLink)
@@ -46,7 +47,7 @@ Public Class StandardParsers
             .Add("h1", AddressOf ParseH1)
             .Add("br", AddressOf ParseBr)
             .Add("p", AddressOf ParseP)
-            .Add("div", AddressOf ParseDiv)
+            .Add("container", AddressOf ParseDiv)
             .Add("text", AddressOf ParseText)
             .Add("css", AddressOf ParseCss)
             .Add("form", AddressOf ParseForm)
@@ -55,7 +56,7 @@ Public Class StandardParsers
             .Add("ready", AddressOf ParseReady)
             .Add("error", AddressOf ParseError)
             .Add("upload", AddressOf parseFileUpload)
-            .Add("plain", AddressOf ParsePlain)
+            .Add("condition", AddressOf parseCondition)
         End With
 
     End Sub
@@ -85,9 +86,13 @@ Public Class StandardParsers
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function ParseHead(ByVal data As XElement, context As ParseContext) As XElement
+
+
         Dim Content = <head>
                           <%= From item In data.Elements Select CassandraParser.Parse(item, context) %>
                       </head>
+
+        CassandraParser.OutputScope.Add(New scopeItem With {.Scope = "head", .Element = Content})
 
         Return Content
     End Function
@@ -100,8 +105,12 @@ Public Class StandardParsers
     ''' <remarks></remarks>
     Public Function ParseBody(ByVal data As XElement, context As ParseContext) As XElement
         Dim content = <body>
-                          <%= From item In data.Elements Select CassandraParser.Parse(item, context) %>
+                          <div class="main-container">
+                              <%= From item In data.Elements Select CassandraParser.Parse(item, context) %>
+                          </div>
                       </body>
+
+        CassandraParser.OutputScope.Add(New scopeItem With {.Scope = "body", .Element = content})
 
         Return content
     End Function
@@ -192,15 +201,19 @@ Public Class StandardParsers
         Dim val As String = data.Value
         Dim pattern As String = "(\[%).*?(%\])"
 
-        Dim htmlop As String = Regex.Replace(val, pattern,
+
+
+        Dim htmlopBody As String = Regex.Replace(val, pattern,
                                              Function(m As Match) As String
                                                  Dim ip = m.Value.Replace("[%", "").Replace("%]", "")
                                                  Dim html = CassandraParser.Parse(XElement.Parse(ip), context).ToString
 
 
-                                                 Return _ret(html)
+                                                 Return html
 
                                              End Function)
+
+        Dim htmlop As String = "<div>" & htmlopBody & "</div>"
 
         Return XElement.Parse(htmlop)
 
@@ -268,10 +281,7 @@ Public Class StandardParsers
         Return fileupload
     End Function
 
-    Public Function ParsePlain(ByVal data As XElement, context As ParseContext) As XElement
-        context.Response.Write(data.Value)
-        Return Nothing
-    End Function
+   
 
 
     
@@ -296,6 +306,64 @@ Public Class StandardParsers
 
         Dim img = <img src=<%= "data:image/jpeg;base64," & data.Value %> alt="binary image"/>
         Return img
+    End Function
+
+    Public Function ParseTopBar(ByVal data As XElement, context As ParseContext) As XElement
+        Dim bar = <div class="cwml-top-bar">
+                      <%= From item In data.Elements Select CassandraParser.Parse(item, context) %>
+                  </div>
+
+        Return bar
+    End Function
+
+    Public Function ParseFromString(ByVal data As String, context As ParseContext) As XElement
+        Dim value = data.Replace("{{", "<").Replace("}}", ">")
+        Dim pattern As String = "(\[%).*?(%\])"
+
+
+
+        Dim htmlopBody As String = Regex.Replace(data, pattern,
+                                             Function(m As Match) As String
+                                                 Dim ip = m.Value.Replace("[%", "").Replace("%]", "")
+                                                 Dim html = CassandraParser.Parse(XElement.Parse(ip), context).ToString
+
+
+                                                 Return _ret(html)
+
+                                             End Function)
+
+        Dim htmlop As String = "<div>" & htmlopBody & "</div>"
+
+        Return XElement.Parse(htmlop)
+    End Function
+
+    Public Function ParseRadioButton(ByVal data As XElement, context As ParseContext) As XElement
+
+
+
+    End Function
+
+    Public Function parseCondition(ByVal data As XElement, context As ParseContext) As XElement
+
+        Dim condType As CassandraParser.ConditionType = [Enum].Parse(GetType(CassandraParser.ConditionType), data.@operator)
+        Dim right As String = data.@right
+        Dim left As String = data.@left
+
+        Dim equals = CassandraParser.ParseCondition(condType, right, left, context)
+
+        If equals = True Then
+            Dim div = <div>
+                          <%= From item In data.Elements Select CassandraParser.Parse(item, context) %>
+                          <!-- Conditional block -->
+                      </div>
+
+            Return div
+        Else
+
+            Return Nothing
+
+        End If
+
     End Function
 
 

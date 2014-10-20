@@ -7,14 +7,14 @@
         Full
     End Enum
 
-    Private _user As String
+    Private _user As Guid
     Private _permission As PermissionType
 
-    Public Property user As String
+    Public Property user As Guid
         Get
             Return _user
         End Get
-        Set(value As String)
+        Set(value As Guid)
             _user = value
         End Set
     End Property
@@ -28,8 +28,8 @@
         End Set
     End Property
 
-    Public Shared Function [Default]() As permissionObject
-        Return New permissionObject With {.permission = PermissionType.Full, .user = "$owner"}
+    Public Shared Function [Default](ByVal userId As Guid) As permissionObject
+        Return New permissionObject With {.permission = PermissionType.Full, .user = userId}
     End Function
 
 

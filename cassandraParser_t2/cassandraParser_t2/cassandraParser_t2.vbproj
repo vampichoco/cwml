@@ -114,37 +114,28 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="camTest.html" />
-    <None Include="createimg.cwml">
+    <None Include="samples\imgblog\createimg.cwml">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="HtmlPage1.html" />
     <Content Include="index.cwml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="bio.cwml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="datainsert.cwml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="addentry.cwml">
+    <Content Include="samples\blog\addentry.cwml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="blog.cwml">
+    <Content Include="samples\blog\blog.cwml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="fileupload.cwml" />
-    <Content Include="files.cwml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="file.cwml" />
     <Content Include="coffee.cwml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="imgblog.cwml">
+    <Content Include="samples\imgblog\imgblog.cwml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="lambda.cwml">
+    <Content Include="customParser.cwml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="packages.config" />
@@ -161,12 +152,6 @@
     <Content Include="camera.cwml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="elle1.cwml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="elle.cwml">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CassandraHandler.vb" />

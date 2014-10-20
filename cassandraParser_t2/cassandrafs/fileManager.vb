@@ -6,10 +6,10 @@ Imports MongoDB.Driver.Linq
 Public Class fileManager
 
     Private _connectionString As String
-    Private _indexkey As String
+    Private _indexkey As Guid
     Private _collection As Driver.MongoCollection(Of BsonDocument)
 
-    Public Sub New(ByVal connectionString As String, indexKey As String)
+    Public Sub New(ByVal connectionString As String, indexKey As Guid)
         _connectionString = connectionString
         _indexkey = indexKey
         _collection = GetCollection("filesystemstore", connectionString)
@@ -21,21 +21,35 @@ Public Class fileManager
         End Get
     End Property
 
-    Public Function GetDirectory(ByVal directoryId As String) As directory
+    Public Function GetDirectory(ByVal directoryId As Guid) As directory
         Dim Collection = GetCollection("filesystemstore", _connectionString)
 
         Dim dir = Collection.AsQueryable(Of directory).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.id = directoryId)
-
-
-
         Return dir
 
+    End Function
+
+    Public Function GetFile(ByVal fileId As Guid) As cassandrafs.fileItem
+        Dim collection = Me.Collection
+
+        Dim file = collection.AsQueryable(Of fileItem).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.id = fileId)
+
+        Return file
+
+    End Function
+
+    Public Function GetCode(ByVal codeId As Guid) As cassandrafs.codeItem
+        Dim collection = Me.Collection
+
+        Dim code = collection.AsQueryable(Of codeItem).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.id = codeId)
+
+        Return code
     End Function
 
     Public Function GetParentDirectory() As directory
         Dim Collection = GetCollection("filesystemstore", _connectionString)
 
-        Dim dir = Collection.AsQueryable(Of directory).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.id = "{null}}")
+        Dim dir = Collection.AsQueryable(Of directory).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.directory = Guid.Empty)
 
 
 
@@ -73,7 +87,7 @@ Public Class fileManager
         Dim client = New MongoClient(connectionString)
 
         Dim server = client.GetServer
-        Dim dataBase = server.GetDatabase("sadzee")
+        Dim dataBase = server.GetDatabase("stardustfs")
 
         Dim collection = dataBase.GetCollection(collectionName)
 
@@ -89,7 +103,7 @@ Public Class fileManager
 
     Public Function GrantPermission(ByVal [object] As objectItem, userToGrant As String, permission As permissionObject.PermissionType) As Boolean
         Try
-            [object].permission.Add(New permissionObject With {.permission = permission, .user = userToGrant})
+            [object].permission.Add(New permissionObject With {.permission = permission, .user = Guid.Empty})
             _collection.Save([object])
 
             Return True
@@ -98,7 +112,7 @@ Public Class fileManager
         End Try
     End Function
 
-    Public Function RevokePermission(ByVal [object] As objectItem, userToRevoke As String, permission As permissionObject.PermissionType) As Boolean
+    Public Function RevokePermission(ByVal [object] As objectItem, userToRevoke As Guid, permission As permissionObject.PermissionType) As Boolean
         Try
             Dim perm = [object].permission.SingleOrDefault(Function(p) p.permission = permission And p.user = userToRevoke)
             If perm IsNot Nothing Then

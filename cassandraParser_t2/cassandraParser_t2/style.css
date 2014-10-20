@@ -11,6 +11,13 @@ body {
     color: #6600FF;
     font-family: 'Pontano Sans', sans-serif;
     font-size: medium;
+} 
+
+.cwml-top-bar{
+    background-color:azure;
+    position:fixed; 
+    top:0px;
+    width:100%;
 }
 
 h1 {

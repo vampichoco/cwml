@@ -2,7 +2,7 @@
 <page>
   <head>
     <plain><![CDATA[<meta name="viewport" content="width=device-width, initial-scale=1" />]]></plain>
-    <css>style.css</css>
+    <css>/style.css</css>
   </head>
   <content>
     <query collection="imageblog">

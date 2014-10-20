@@ -119,6 +119,12 @@ Public Class CassandraHandler
             
 
             Dim parsed = parser.Parse(xDoc.Elements.First, parseContext)
+
+            Dim head = parser.OutputScope.SingleOrDefault(Function(si) si.Scope = "head")
+            head.Element.Add(parser.Parse(<css>/style.css</css>, parseContext))
+
+            Dim body = parser.OutputScope.SingleOrDefault(Function(si) si.Scope = "body")
+
             context.Response.Write(parsed.ToString)
 
             'parser.Save(parseContext)

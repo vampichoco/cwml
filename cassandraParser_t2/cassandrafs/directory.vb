@@ -25,11 +25,17 @@ Public Class directory
         Return query
     End Function
 
+    Public Function GetCodeItems(ByVal collection As MongoCollection(Of BsonDocument)) As IEnumerable(Of codeItem)
+        Dim query = From c In collection.AsQueryable(Of codeItem)() Where c.indexKey = Me.indexKey And c.directory = Me.id And c.type = ObjectType.Code
+
+        Return query
+    End Function
+
     Public Overrides Function ToString() As String
         Return String.Format("File Name: {0}, ID={1}", Me.name, Me.id)
     End Function
 
-    
+
 
 
 End Class
