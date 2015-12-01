@@ -35,16 +35,7 @@ def __plugin_karem(_d, _c):
       <button id="button1">Submit</button>
     </form>
     <test>Hola, mundo!</test>
-    <karem>Te quiero 1</karem>
-    <karem>Te quiero 2</karem>
-    <karem>Te quiero 3</karem>
-    <karem>Te quiero 4</karem>
-    <karem>Te quiero 5</karem>
-    <karem>Te quiero 6</karem>
-    <karem>Te quiero 7</karem>
-    <karem>Te quiero 8</karem>
-    <karem>Te quiero 9</karem>
-    <karem>Te quiero 10</karem>
+    <karem>Testing plugins</karem>
     
   </content>
 </page>

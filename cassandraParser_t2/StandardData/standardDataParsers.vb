@@ -37,6 +37,7 @@ Public Class StandardDataParser
             Case "equals"
                 Dim name As String = input.@name
                 Dim value As String = input.@value
+                Dim type = ParseDataType(input.@type)
 
                 If Regex.IsMatch(name, CWML.CassandraParser.variablePattern) Then : name = context.Variables(name)
                 End If
@@ -44,7 +45,9 @@ Public Class StandardDataParser
                 If Regex.IsMatch(value, CWML.CassandraParser.variablePattern) Then : value = context.Variables(value)
                 End If
 
-                Return Query.EQ(name, value)
+                Dim __value = BuildValue(value, type)
+
+                Return Query.EQ(name, __value)
 
             Case Else
                 If input.Name = "all" = False Then
@@ -68,6 +71,26 @@ Public Class StandardDataParser
 
     End Function
 
+    Public Function BuildValue(ByVal value As String, Type As BsonType) As BsonValue
+        Select Case Type
+            Case BsonType.String
+                Return New BsonString(value)
+            Case BsonType.Int32
+                Return New BsonInt32(Integer.Parse(value))
+            Case BsonType.Int64
+                Return New BsonInt64(Int64.Parse(value))
+            Case BsonType.DateTime
+                Return New BsonDateTime(Date.Parse(value))
+            Case BsonType.Binary
+                Dim val As New BsonBinaryData(Convert.FromBase64String(value))
+                Return val
+            Case BsonType.ObjectId
+                Return New ObjectId(value)
+            Case Else
+                Return New BsonString(value)
+        End Select
+    End Function
+
     Public Function ParseDataType(ByVal strType As String) As BsonType
         Select Case strType
             Case "string"
@@ -80,6 +103,8 @@ Public Class StandardDataParser
                 Return BsonType.DateTime
             Case "binary"
                 Return BsonType.Binary
+            Case "uniqueid"
+                Return BsonType.ObjectId
             Case Else
                 Return BsonType.String
         End Select
@@ -90,7 +115,29 @@ Public Class StandardDataParser
         Dim name = data.@name
         Dim value = data.@value
 
+        Return parseDataElement(name, value, type, context)
 
+    End Function
+
+    Public Function GetPropertyValue(ByVal obj As Object, ByVal PropName As String) As Object
+        Dim objType As Type = obj.GetType()
+        Dim pInfo As System.Reflection.PropertyInfo = objType.GetProperty(PropName)
+        Dim PropValue As Object = pInfo.GetValue(obj, Reflection.BindingFlags.GetProperty, Nothing, Nothing, Nothing)
+        Return PropValue
+    End Function
+
+    Public Function parseDataElement(ByVal fieldName As String, ByVal fieldValue As String, ByVal type As String, context As CWML.ParseContext) As BsonElement
+
+        Dim value As String = fieldValue
+        Dim name As String = fieldName
+        Dim propertyField As String = ""
+        Dim isProperty As Boolean = False
+
+        If Regex.IsMatch(value, "\$\w+\/\w+\.\w+") Then
+            propertyField = value
+            value = value.Substring(0, value.IndexOf("."c))
+            isProperty = True
+        End If
 
         If Regex.IsMatch(value, CWML.CassandraParser.variablePattern) Then
 
@@ -98,12 +145,27 @@ Public Class StandardDataParser
                 Throw New Exception(String.Format("Variable '{0}' not found in variable dictionary", value))
             End If
 
-            value = context.Variables(value)
+            If isProperty Then
+
+                Dim propName As String
+                Dim propPos As Integer = propertyField.IndexOf(".")
+                Dim l As Integer = propertyField.Length - propPos
+                propName = propertyField.Substring(propPos, l)
+
+
+
+                Dim val = GetPropertyValue(context.Variables(value), propName.Replace(".", ""))
+                value = val
+            Else
+                value = context.Variables(value)
+            End If
+
+
 
         End If
 
 
-        Select Case type
+        Select Case ParseDataType(type)
             Case BsonType.String
                 Return New BsonElement(name, New BsonString(value))
             Case BsonType.Int32
@@ -115,14 +177,17 @@ Public Class StandardDataParser
             Case BsonType.Binary
                 Dim val As New BsonBinaryData(Convert.FromBase64String(value))
                 Return New BsonElement(name, val)
+            Case BsonType.ObjectId
+                Return New BsonElement(name, New ObjectId(value))
             Case Else
                 Return New BsonElement(name, New BsonString(value))
         End Select
+
     End Function
 
     Public Function ParseQuery(ByVal data As XElement, context As CWML.ParseContext) As XElement
 
-        Dim connectionString = context.Variables("$system/connectionString")
+        Dim connectionString = context.Variables("$system/connectionString").ToString()
         Dim dbName As String = context.Variables("$system/dbName")
 
 
@@ -215,15 +280,15 @@ Public Class StandardDataParser
     End Function
 
     Public Function ParseDataInsert(ByVal data As XElement, context As CWML.ParseContext) As XElement
-        Dim connectionString = context.Variables("$system/connectionString")
-        Dim dbName As String = context.Variables("$system/dbName")
+        Dim connectionString = context.Variables("$system/connectionString").ToString
+        Dim dbName As String = context.Variables("$system/dbName").ToString
 
        
 
             Try
                 Dim collectionName As String = data.@collection
 
-                Dim client = New MongoClient(connectionString)
+            Dim client = New MongoClient(connectionString)
 
                 Dim server = client.GetServer
                 Dim dataBase = server.GetDatabase(dbName)

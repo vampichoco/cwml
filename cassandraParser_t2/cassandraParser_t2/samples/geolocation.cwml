@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+  <head>
+    <css>/style.css</css>
+    <javascript>geolocation.js</javascript>
+    
+  </head>
+  <content>
+    <header />
+    <container>
+      <button onclick="getLocation()">Localizar</button>
+    </container>
+    <image id="map"></image>
+  </content>
+
+  
+</page>

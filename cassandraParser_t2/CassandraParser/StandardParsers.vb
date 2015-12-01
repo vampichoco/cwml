@@ -44,7 +44,7 @@ Public Class StandardParsers
             .Add("content", AddressOf ParseBody)
             .Add("link", AddressOf ParseLink)
             .Add("image", AddressOf ParseImage)
-            .Add("h1", AddressOf ParseH1)
+            '.Add("h1", AddressOf ParseH1)
             .Add("br", AddressOf ParseBr)
             .Add("p", AddressOf ParseP)
             .Add("container", AddressOf ParseDiv)
@@ -52,11 +52,12 @@ Public Class StandardParsers
             .Add("css", AddressOf ParseCss)
             .Add("form", AddressOf ParseForm)
             .Add("textBox", AddressOf ParseTextBox)
-            .Add("button", AddressOf ParseButton)
+            '.Add("button", AddressOf ParseButton)
             .Add("ready", AddressOf ParseReady)
             .Add("error", AddressOf ParseError)
             .Add("upload", AddressOf parseFileUpload)
             .Add("condition", AddressOf parseCondition)
+            .Add("checkBox", AddressOf ParseCheckBox)
         End With
 
     End Sub
@@ -122,7 +123,7 @@ Public Class StandardParsers
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function ParseImage(ByVal data As XElement, context As ParseContext) As XElement
-        Dim content = <img src=<%= data.Value %>/>
+        Dim content = <img src=<%= data.Value %><%= From item In data.Attributes Select item %>/>
         Return content
     End Function
 
@@ -153,7 +154,7 @@ Public Class StandardParsers
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Function ParseH1(ByVal data As XElement, context As ParseContext) As XElement
-        Dim content = <h1><%= data.Value %></h1>
+        Dim content = <h1><%= CassandraParser.Parse(data.Value, context) %></h1>
         Return content
     End Function
 
@@ -256,10 +257,16 @@ Public Class StandardParsers
     End Function
 
     Public Function ParseTextBox(ByVal data As XElement, context As ParseContext) As XElement
+
         Dim content = <input type="Text" id=<%= data.Attribute("id").Value %> name=<%= data.Attribute("id").Value %>/>
 
         Return content
 
+    End Function
+
+    Public Function ParseCheckBox(ByVal data As XElement, context As ParseContext) As XElement
+        Dim content = <input type="checkbox" id=<%= data.Attribute("id").Value %> name=<%= data.Attribute("id").Value %>></input>
+        Return content
     End Function
 
     Public Function ParseButton(ByVal data As XElement, context As ParseContext) As XElement
@@ -281,10 +288,10 @@ Public Class StandardParsers
         Return fileupload
     End Function
 
-   
 
 
-    
+
+
 
     Public Function ParseReady(data As XElement, context As ParseContext) As XElement
         Dim result = <div>
@@ -365,6 +372,8 @@ Public Class StandardParsers
         End If
 
     End Function
+
+
 
 
 #End Region

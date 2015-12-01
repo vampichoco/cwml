@@ -1,7 +1,9 @@
-﻿Public Class ParseContext
+﻿Imports System.Text.RegularExpressions
+
+Public Class ParseContext
     Private _request As Web.HttpRequest
     Private _response As Web.HttpResponse
-    Private _variables As Dictionary(Of String, String)
+    Private _variables As Dictionary(Of String, Object)
     Private _debug As Boolean
     Private _fileName As String
     Private _extend As Dictionary(Of String, Action(Of XElement))
@@ -12,13 +14,29 @@
         _request = req
         _response = resp
 
-        _variables = New Dictionary(Of String, String)
+        _variables = New Dictionary(Of String, Object)
 
         _extend = New Dictionary(Of String, Action(Of XElement))
 
         If Request.Form IsNot Nothing Then
             For Each item In Request.Form.Keys
-                _variables.Add("$form/" & item, Request.Form(item))
+
+                If Regex.IsMatch(item, "\$\w+\/\w+\.\w+") Then
+                    Dim v As String = item.Name.ToString()
+                    Dim propName As String
+                    Dim propPos As Integer = v.IndexOf(".")
+                    propName = v.Substring(propPos, v.Length)
+
+                    Dim val = Request.Form(item)
+
+                    
+
+                Else
+                    Dim val = Request.Form(item)
+                    _variables.Add("$form/" & item, val)
+                End If
+
+                
             Next
         End If
 
@@ -41,6 +59,13 @@
         _variables.Add("$system/dateTime", DateTime.Now.ToString)
 
     End Sub
+
+    Public Function GetPropertyValue(ByVal obj As Object, ByVal PropName As String) As Object
+        Dim objType As Type = obj.GetType()
+        Dim pInfo As System.Reflection.PropertyInfo = objType.GetProperty(PropName)
+        Dim PropValue As Object = pInfo.GetValue(obj, Reflection.BindingFlags.GetProperty, Nothing, Nothing, Nothing)
+        Return PropValue
+    End Function
 
     Public Sub New()
         _extend = New Dictionary(Of String, Action(Of XElement))
@@ -88,7 +113,7 @@
         End Set
     End Property
 
-    Public ReadOnly Property Variables As Dictionary(Of String, String)
+    Public ReadOnly Property Variables As Dictionary(Of String, Object)
         Get
             Return _variables
         End Get

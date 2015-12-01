@@ -29,10 +29,18 @@ Public Class CassandraHandler
             Dim xDoc As XDocument = XDocument.Load(physicalPath)
 
             Dim parser As New CWML.CassandraParser
-            parser.UseDefaultCss = True
+            parser.UseDefaultCss = False
 
 
-            Dim stdLib As New CWML.StandardParsers(parser) 'Load standard library
+            Dim stdLib As New CWML.StandardParsers(parser) 'Load standard library 
+
+            'Disable some std elements to avoid bootstrap collides 
+
+            parser.BlockParsers.Remove("button")
+            parser.BlockParsers.Remove("textBox")
+            parser.BlockParsers.Remove("upload")
+            parser.BlockParsers.Remove("form")
+
             Dim DynamicParser As New DynamicBlockParser(parser) 'Load dynamic block library
             Dim stdData As New StandardData.StandardDataParser(parser)
 
@@ -98,7 +106,7 @@ Public Class CassandraHandler
 
                 End Function,
                 .validationFailed = Function(data, ctx) As XElement
-                                        Return <div>you have no permission for this!</div>
+                                        Return <div>you have no permission for this! =(</div>
                                     End Function}
 
             parser.Validators.Add(dataInsertPresenceValidator)
@@ -121,7 +129,7 @@ Public Class CassandraHandler
             Dim parsed = parser.Parse(xDoc.Elements.First, parseContext)
 
             Dim head = parser.OutputScope.SingleOrDefault(Function(si) si.Scope = "head")
-            head.Element.Add(parser.Parse(<css>/style.css</css>, parseContext))
+
 
             Dim body = parser.OutputScope.SingleOrDefault(Function(si) si.Scope = "body")
 

@@ -6,10 +6,10 @@ Imports MongoDB.Driver.Linq
 Public Class fileManager
 
     Private _connectionString As String
-    Private _indexkey As Guid
+    Private _indexkey As ObjectId
     Private _collection As Driver.MongoCollection(Of BsonDocument)
 
-    Public Sub New(ByVal connectionString As String, indexKey As Guid)
+    Public Sub New(ByVal connectionString As String, indexKey As ObjectId)
         _connectionString = connectionString
         _indexkey = indexKey
         _collection = GetCollection("filesystemstore", connectionString)
@@ -21,7 +21,7 @@ Public Class fileManager
         End Get
     End Property
 
-    Public Function GetDirectory(ByVal directoryId As Guid) As directory
+    Public Function GetDirectory(ByVal directoryId As ObjectId) As directory
         Dim Collection = GetCollection("filesystemstore", _connectionString)
 
         Dim dir = Collection.AsQueryable(Of directory).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.id = directoryId)
@@ -29,7 +29,7 @@ Public Class fileManager
 
     End Function
 
-    Public Function GetFile(ByVal fileId As Guid) As cassandrafs.fileItem
+    Public Function GetFile(ByVal fileId As ObjectId) As cassandrafs.fileItem
         Dim collection = Me.Collection
 
         Dim file = collection.AsQueryable(Of fileItem).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.id = fileId)
@@ -38,7 +38,7 @@ Public Class fileManager
 
     End Function
 
-    Public Function GetCode(ByVal codeId As Guid) As cassandrafs.codeItem
+    Public Function GetCode(ByVal codeId As ObjectId) As cassandrafs.codeItem
         Dim collection = Me.Collection
 
         Dim code = collection.AsQueryable(Of codeItem).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.id = codeId)
@@ -49,7 +49,7 @@ Public Class fileManager
     Public Function GetParentDirectory() As directory
         Dim Collection = GetCollection("filesystemstore", _connectionString)
 
-        Dim dir = Collection.AsQueryable(Of directory).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.directory = Guid.Empty)
+        Dim dir = Collection.AsQueryable(Of directory).SingleOrDefault(Function(d) d.indexKey = _indexkey And d.directory = ObjectId.Empty)
 
 
 
@@ -103,7 +103,7 @@ Public Class fileManager
 
     Public Function GrantPermission(ByVal [object] As objectItem, userToGrant As String, permission As permissionObject.PermissionType) As Boolean
         Try
-            [object].permission.Add(New permissionObject With {.permission = permission, .user = Guid.Empty})
+            [object].permission.Add(New permissionObject With {.permission = permission, .user = ObjectId.Empty})
             _collection.Save([object])
 
             Return True
@@ -112,7 +112,7 @@ Public Class fileManager
         End Try
     End Function
 
-    Public Function RevokePermission(ByVal [object] As objectItem, userToRevoke As Guid, permission As permissionObject.PermissionType) As Boolean
+    Public Function RevokePermission(ByVal [object] As objectItem, userToRevoke As ObjectId, permission As permissionObject.PermissionType) As Boolean
         Try
             Dim perm = [object].permission.SingleOrDefault(Function(p) p.permission = permission And p.user = userToRevoke)
             If perm IsNot Nothing Then

@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -114,6 +115,23 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="camTest.html" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="samples\geolocation.js" />
+    <Content Include="samples\bootstrap\index.cwml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="samples\geolocation.cwml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="samples\imgblog\createimg.cwml">
       <SubType>Designer</SubType>
     </None>
@@ -132,6 +150,7 @@
     <Content Include="coffee.cwml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="samples\bootstrap\jumbotron.css" />
     <Content Include="samples\imgblog\imgblog.cwml">
       <SubType>Designer</SubType>
     </Content>
@@ -142,6 +161,12 @@
     <None Include="query.cwml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Scripts\jquery-1.9.0.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.9.0.js" />
+    <Content Include="Scripts\jquery-1.9.0.min.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -194,6 +219,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="Scripts\jquery-1.9.0.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

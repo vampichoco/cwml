@@ -1,4 +1,7 @@
-﻿Public Class permissionObject
+﻿Imports MongoDB
+Imports MongoDB.Bson
+
+Public Class permissionObject
     Public Enum PermissionType
         Read
         Write
@@ -7,14 +10,14 @@
         Full
     End Enum
 
-    Private _user As Guid
+    Private _user As ObjectId
     Private _permission As PermissionType
 
-    Public Property user As Guid
+    Public Property user As ObjectId
         Get
             Return _user
         End Get
-        Set(value As Guid)
+        Set(value As ObjectId)
             _user = value
         End Set
     End Property
@@ -28,7 +31,7 @@
         End Set
     End Property
 
-    Public Shared Function [Default](ByVal userId As Guid) As permissionObject
+    Public Shared Function [Default](ByVal userId As ObjectId) As permissionObject
         Return New permissionObject With {.permission = PermissionType.Full, .user = userId}
     End Function
 

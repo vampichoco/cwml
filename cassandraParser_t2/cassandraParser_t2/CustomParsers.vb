@@ -41,6 +41,14 @@ Public Class CustomParsers
             .Add("coffee", AddressOf ParseCoffee)
             .Add("imageEntry", AddressOf ParseImageEntry)
             .Add("import", AddressOf Import)
+            .Add("javascript", AddressOf ParseJavaScript)
+
+            'Bootstrap Parsers 
+
+            .Add("jquery", AddressOf parseJquery)
+            .Add("bootstrap", AddressOf ParseBootstrap)
+            .Add("glyphicon", AddressOf ParseGlyphicon)
+
 
         End With
 
@@ -49,7 +57,7 @@ Public Class CustomParsers
 #Region "Parsers"
     Public Function ParseHeader(ByVal data As XElement, context As ParseContext) As XElement
         Dim content = <div>
-                          <h1>CWML - Cassandra Web Markup Language</h1>
+                          <h1>Webxi using CWML</h1>
                           <%= From item In data.Elements Select _cassandra.Parse(item, context) %>
                       </div>
 
@@ -133,10 +141,14 @@ Public Class CustomParsers
     End Function
 
     Public Function parseEntry(ByVal data As XElement, context As ParseContext) As XElement
+
+        Dim entryText As XElement = data.<entryText>
+
         Dim entry = <div>
                         <h1><%= data.<entryTitle> %></h1>
                         <strong>By <%= data.<author> %></strong>
-                        <div><%= _cassandra.Parse(data.<entryText>, context) %></div>
+
+                        <div><%= _cassandra.Parse(entryText, context) %></div>
                     </div>
 
         Return entry
@@ -191,6 +203,12 @@ Public Class CustomParsers
 
         Return result
 
+    End Function
+
+    Public Function ParseJavaScript(ByVal data As XElement, context As ParseContext) As XElement
+        Dim result = <script type="text/javascript" src=<%= data.Value %>></script>
+
+        Return result
     End Function
 
     Public Function ParseCoffeeLib(ByVal data As XElement, context As ParseContext) As XElement
@@ -260,6 +278,24 @@ Public Class CustomParsers
 
 
     End Function
+
+    Public Function parseJquery(ByVal data As XElement, ctx As ParseContext) As XElement
+        Dim s = <script src="/Scripts/jquery-1.9.0.js"></script>
+        Return s
+    End Function
+
+    Public Function ParseBootstrap(ByVal data As XElement, ctx As ParseContext) As XElement
+        Dim b = <script src="/Scripts/bootsrap.js"></script>
+
+        Return b
+    End Function
+
+    Public Function ParseGlyphicon(ByVal data As XElement, ctx As ParseContext) As XElement
+        Dim glStr As String = String.Format("glyphicon glyphicon-{0}", data.Value)
+        Return <span class=<%= glStr %>></span>
+    End Function
+
+
 
 
 #End Region

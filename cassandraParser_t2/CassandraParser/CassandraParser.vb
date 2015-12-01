@@ -24,6 +24,7 @@ Public Class CassandraParser
 
     Private _StyleCss As Text.StringBuilder
     Private _styleMixins As Dictionary(Of String, XElement)
+    Private _htmlMixins As Dictionary(Of String, XElement)
 
     Private _output_scope As List(Of scopeItem)
 
@@ -45,6 +46,7 @@ Public Class CassandraParser
         _output_scope = New List(Of scopeItem)
         _StyleCss = New Text.StringBuilder()
         _styleMixins = New Dictionary(Of String, XElement)
+        _htmlMixins = New Dictionary(Of String, XElement)
     End Sub
 
     ''' <summary>
@@ -100,6 +102,12 @@ Public Class CassandraParser
         End Get
     End Property
 
+    Public ReadOnly Property HtmlMixins As Dictionary(Of String, XElement)
+        Get
+            Return _htmlMixins
+        End Get
+    End Property
+
     ''' <summary>
     ''' Parse one CWML block into an HTML block
     ''' </summary>
@@ -108,6 +116,41 @@ Public Class CassandraParser
     ''' <remarks></remarks>
     Public Function Parse(ByVal data As XElement, context As ParseContext) As XElement
 
+        Select Case data.Name.ToString
+            Case "callHtmlMixin"
+                Return ParseHtmlMixin(data, context)
+            Case Else
+                If BlockParsers.ContainsKey(data.Name.ToString()) Or ImportedTags.ContainsKey(data.Name.ToString()) Then
+                    Return ParseTag(data, context)
+                Else
+                    Return ByPass(data, context)
+                End If
+        End Select
+
+    End Function
+
+    Public Function ByPass(ByVal data As XElement, context As ParseContext) As XElement
+
+        ParseStyle(data, context)
+
+        Dim el As New XElement(data.Name)
+
+        For Each a In data.Attributes
+            el.Add(New XAttribute(a.Name, FindValues(a.Value, context)))
+        Next
+
+        If data.HasElements Then
+            For Each item In data.Elements
+                el.Add(Parse(item, context))
+            Next
+        Else
+            el.SetValue(FindValues(data.Value, context))
+        End If
+
+        Return el
+    End Function
+
+    Public Function ParseTag(ByVal data As XElement, context As ParseContext) As XElement
         Dim blockName As String = data.Name.ToString
         If data.Attributes.SingleOrDefault(Function(a) a.Name = "inherits") IsNot Nothing Then
             blockName = data.Attributes.SingleOrDefault(Function(a) a.Name = "inherits")
@@ -166,8 +209,6 @@ Public Class CassandraParser
             Try
                 If ImportedTags.ContainsKey(blockName) Then
 
-
-
                     Dim plugInMembers As New Dictionary(Of String, Func(Of XElement, ParseContext, XElement))
 
 
@@ -179,8 +220,17 @@ Public Class CassandraParser
                     Return result
 
                 Else
+                    'If BlockParsers.ContainsKey(blockName) = False Then
+                    '    Return RawParse(data, context)
+                    'Else
                     act = BlockParsers(blockName)
-                    Return act.Invoke(data, context)
+                        Return act.Invoke(data, context)
+                    'End If
+
+
+
+                    'Return RawParse(data, context)
+
                 End If
             Catch ex As Exception
                 Return <div class="cwml-system-error">
@@ -195,19 +245,37 @@ Public Class CassandraParser
         'Return data
         'End If
         'End If
+    End Function
 
+    Public Function Parse(ByVal data As String, context As ParseContext) As XElement
+        Dim value = data.Replace("{{", "<").Replace("}}", ">")
+        Dim pattern As String = "(\[%).*?(%\])"
+
+
+        Dim htmlopBody As String = Regex.Replace(value, pattern,
+                                             Function(m As Match) As String
+                                                 Dim ip = m.Value.Replace("[%", "").Replace("%]", "")
+                                                 Dim html = Parse(XElement.Parse(ip), context).ToString
+
+                                                 Return html
+
+                                             End Function)
+
+        Dim htmlop As String = "<div>" & htmlopBody & "</div>"
+
+        Return XElement.Parse(htmlop)
     End Function
 
     Public Sub ParseStyle(ByVal data As XElement, ctx As ParseContext)
-       
+
         Dim id As String = ""
         Dim setClass As Boolean = False
 
-        For Each _style In data.Elements().Where(Function(s) s.Name = "style" Or s.Name = "mixin")
+        id = GenerateName(data, ctx)
+        id = id.Replace(" ", "-")
 
-            If id = "" Then
-                id = GenerateName(data, ctx)
-            End If
+        For Each _style In data.Elements().Where(Function(s) s.Name = "style" Or s.Name = "callStyleMixin")
+
 
             If setClass = False Then
                 setClass = True
@@ -218,7 +286,7 @@ Public Class CassandraParser
 
                     _StyleCss.Append(GenerateCss(id, _style, ctx, _style.Attributes))
 
-                Case "mixin"
+                Case "callStyleMixin"
                     Dim mixinData = _style
                     Dim mixinName As String = mixinData.@name
                     Dim mixin As XElement = _styleMixins(mixinName)
@@ -229,12 +297,13 @@ Public Class CassandraParser
 
             _style.Remove()
 
+
         Next
+
 
         If setClass Then
             SetClassAttribute(data, id)
         End If
-
 
     End Sub
 
@@ -277,7 +346,7 @@ Public Class CassandraParser
                     Case "import"
                         Dim import As String =
                             String.Format("@import url({0});", item.Value)
-                        _StyleCss.AppendLine(import)
+                        _StyleCss.Append(import)
 
                     Case Else
 
@@ -291,18 +360,18 @@ Public Class CassandraParser
                                 params.Single(Function(p) p.Name.ToString = pv)
                         End If
 
-                        .AppendLine(String.Format("{0}:{1};", item.Name, propertyValue))
+                        .Append(String.Format("{0}:{1};", item.Name, propertyValue))
                 End Select
 
             End With
         Next
 
-        cssBuilder.AppendLine("}")
+        cssBuilder.Append("}")
 
         For Each selector In selectors
 
             Dim selectorName = SubstituteVariableByValue(selector.Attribute("name").Value, ctx)
-            cssBuilder.AppendLine(String.Format(".{0}{{", selectorName))
+            cssBuilder.Append(String.Format(".{0}{{", selectorName))
 
             For Each item In selector.Elements
 
@@ -314,21 +383,95 @@ Public Class CassandraParser
                     propertyValue =
                         params.Single(Function(p) p.Name.ToString = pv)
                 End If
-                cssBuilder.AppendLine(String.Format("{0}:{1};", item.Name, propertyValue))
+                cssBuilder.Append(String.Format("{0}:{1};", item.Name, propertyValue))
 
             Next
 
-            cssBuilder.AppendLine("}")
+            cssBuilder.Append("}")
         Next
 
         Return cssBuilder.ToString
 
     End Function
 
+    Public Function ParseHtmlMixin(mixin As XElement, context As ParseContext) As XElement
+        Dim privateScope As New ParseContext(context.Request, context.Response)
+        privateScope.Variables.Clear()
+
+        For Each var In context.Variables
+            privateScope.Variables.Add(var.Key, var.Value)
+        Next
+
+        For Each item In mixin.Attributes.Where(Function(x) x.Name = "name" = False)
+            privateScope.Variables.Add("$" & item.Name.ToString, item.Value)
+        Next
+
+        Dim mixinOutput = HtmlMixins(mixin.@name)
+
+        Dim Result = Parse(mixinOutput.Element("output").Elements.First(), privateScope)
+        Return Result
+
+    End Function
+
+    Public Function RawParse(ByVal data As XElement, context As ParseContext) As XElement
+        Dim result As New XElement(data.Name)
+        For Each attr In data.Attributes
+
+
+            Dim attrValue = Regex.Replace(attr.Value, variablePattern,
+                                          Function(m As Match)
+                                              If context.Variables.ContainsKey(m.Value) Then
+                                                  Return context.Variables(m.Value)
+                                              Else
+                                                  Return m.Value
+                                              End If
+                                          End Function)
+
+            result.Add(New XAttribute(attr.Name, attrValue))
+
+        Next
+
+        If data.HasElements Then
+            For Each item In data.Elements
+                result.Add(RawParse(item, context))
+            Next
+        Else
+            Dim tagValue = Regex.Replace(data.Value, variablePattern,
+                                         Function(m)
+                                             If context.Variables.ContainsKey(m.Value) Then
+                                                 Return context.Variables(m.Value)
+                                             Else
+                                                 Return m.Value
+                                             End If
+                                         End Function)
+
+            result.SetValue(tagValue)
+        End If
+
+        Return result
+    End Function
+
+
+
     Public Function SubstituteVariableByValue(ByVal str As String, ctx As ParseContext) As String
         Dim regex As New Regex(variablePattern)
         Dim result As String =
             regex.Replace(str, variablePattern,
+                          Function(m As Match) As String
+                              If ctx.Variables.ContainsKey(m.Value) Then
+                                  Return ctx.Variables(m.Value).Replace(" ", "-")
+                              Else
+                                  Return m.Value
+                              End If
+                          End Function)
+
+        Return result
+    End Function
+
+    Public Function FindValues(ByVal str As String, ctx As ParseContext) As String
+        Dim regex As New Regex(variablePattern)
+        Dim result As String =
+            Regex.Replace(str, variablePattern,
                           Function(m As Match) As String
                               If ctx.Variables.ContainsKey(m.Value) Then
                                   Return ctx.Variables(m.Value)

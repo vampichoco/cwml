@@ -1,33 +1,34 @@
 <page>
   <head>
-    <!-- <title>Hello to my Elle Fanning Site</title> -->
-    <!--<css>style.css</css>-->
+   
+    <css>content/bootstrap.css</css>
+    <css>content/hola.css</css>
   </head>
   <content>
-    <topBar>
-      <div>hello, World!</div>
-    </topBar>
+    
     <header>
-      <link goesto="files.cwml">Images</link>
-      <link goesto="blog.cwml">Blog</link>
+      
     </header>
-    <h1>Welcome to the home of CWML</h1>
-    <text><![CDATA[<div> 
-      [% <elle /> %] <br />  [% <link goesto="bio.cwml">Biography</link> %]</div>]]></text>
-    <p>
-      <link goesto="dynamic.cwml">In cwml now you can use dynamic blocks, this page was made with Visual Cassandra</link>
-    </p>
-    <p>
-      <link goesto="https://github.com/vampichoco/cwml/blob/master/cassandraParser_t2/cassandraParser_t2/index.cwml">
-        Check the file that generates this page
-      </link>
-      <br />
-      <link goesto="https://github.com/vampichoco/cwml">
-        Check the source of this project
-      </link>
-    </p>
-    <link goesto="http://eskipublic.s3.amazonaws.com/112.jpg">
+    <jquery />
+    <bootstrap />
+
+    <div>
+      <h2>Bootstrap!</h2>
+      
+      <button type="button" class="btn btn-default btn-lg">
+      <glyphicon>star</glyphicon>
+        <span>Star</span>
+      </button>
+    
+    </div>
+    
+    <h1>Webxi!!! :D</h1>
+
+    <div>
+      <image><![CDATA[http://maps.google.com/maps/api/staticmap?center=20.527244,-100.812833&zoom=15&markers=20.527961,-100.811288&size=500x300&sensor=TRUE_OR_FALSE]]></image>
+    </div>
+    <!--<link goesto="http://eskipublic.s3.amazonaws.com/112.jpg">
       <image>http://eskipublic.s3.amazonaws.com/112.jpg</image>
-    </link>
+    </link>-->
   </content>
 </page>

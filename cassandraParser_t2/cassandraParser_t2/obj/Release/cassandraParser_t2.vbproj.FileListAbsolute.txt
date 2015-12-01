@@ -60,3 +60,6 @@ C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cass
 C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.Modules.xml
 C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.SQLite.xml
 C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\IronPython.Wpf.xml
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\StandardData.dll
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\StandardData.pdb
+C:\Users\Eski\Documents\Visual Studio 2013\Projects\cwml\cassandraParser_t2\cassandraParser_t2\bin\StandardData.xml
